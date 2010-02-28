@@ -1,0 +1,22 @@
+<div align="center" class="gbuchmessages">
+	<?php if($message == "saved_locked"): ?>
+	<p class="g_erfolg">
+	Ihr Eintrag wurde erfolgreich gespeichert und wird so schnell wie m&ouml;glich freigeschaltet.
+	</p>
+	<?php elseif($message == "saved_free"): ?>
+	<p class="g_erfolg">Ihr Eintrag wurde erfolgreich gespeichert!</p>
+	<?php elseif($message == "unknown_error"): ?>
+	<p class="g_error">
+	Beim Speichern des Eintrags trat ein unvorhergesehener Fehler auf.<br />Bitte probieren Sie es sp&auml;ter erneut.
+	</p>
+	<?php elseif($message == "pflicht_failed"): ?>
+	<p class="g_error">
+	Fehler: Sie haben nicht alle ben&ouml;tigten Pflichtfelder ausgef&uuml;llt<br />
+	oder die von Ihnen eingegebenen E-Mail-Adressen bzw. Internetadressen sind syntaktisch nicht korrekt.
+	</p>
+	<?php elseif($message == "antispam_failed"): ?>
+	<p class="g_error">
+	Fehler: Sie haben den Anti-Spamschutz nicht korrekt ausgef&uuml;llt!
+	</p>
+	<?php endif; ?>
+</div>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+
+<modul>
+	<name>01gbook</name>
+	<titel>01-Gaestebuch</titel>
+	<beschreibung>Gaestebuch mit beliebigen Eintragsfeldern und kompletter Online-Verwaltung</beschreibung>
+	<icon>images/gbook.gif</icon>
+	<version>1.0.0.0</version>
+	<need01acpv>1.0.0.2</need01acpv>
+	<datum>21.02.2008</datum>
+	<includeinfo><![CDATA[
+Verwenden Sie folgenden PHP-Code um das 01-Gästebuch in Ihre Seite zu integrieren:<br />
+<code>
+&lt;?PHP<br />
+$subfolder		= "01scripts/"; // Unterverzeichnis<br />
+$modul			= "01gbook"; // Modul- und Verzeichnisname (ID-Name), ggf. &#228;ndern<br />
+<br />
+// ->>An dieser Stelle k&#246;nnen weitere, optionale Parameter eingef&#252;gt werden<<-<br />
+<br />
+include($subfolder."01module/".$modul."/01gbook.php");<br />
+?&gt;<br />
+<br />
+Optionale Parameter sind:<br />
+$flag_utf8      = FALSE; // Setzen Sie $flag_utf8 = TRUE; falls Sie Ihre Seite UTF-8-kodiert ausgeben<br />
+$flag_nocss     = FALSE; // Setzen Sie $flag_nocss = TRUE; wenn kein CSS eingebunden werden soll<br />
+</code>
+	]]></includeinfo>
+
+</modul>

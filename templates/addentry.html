@@ -1,0 +1,25 @@
+<?php if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform): ?>
+<form action="<?PHP echo $link_form; ?>" method="post" name="gbuch">
+<table align="center" class="page_text addentrybox">
+
+	<tr>
+		<td colspan="2"><h2>Neuen Eintrag hinzuf&uuml;gen</h2></td>
+	</tr>
+
+<?PHP echo $felder; ?>
+	
+    <tr>
+		<td colspan="2">
+			<?php if ($settings['gbookantispam'] == 1): ?>
+			<b>Spamschutz*</b>
+			<?php echo create_Captcha(); ?> <input type="text" name="antispam" size="6" class="input_field" />
+			<?php endif; ?>
+            <input type="hidden" name="send_entry" value="1" />
+            <input type="hidden" name="uid" value="<?PHP echo $uid; ?>" />
+            <input type="submit" value="Eintrag absenden" class="input" />
+		</td>
+    </tr>
+
+</table>
+</form>
+<?php endif; ?>
