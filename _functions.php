@@ -6,7 +6,7 @@
 	
 	Modul:		01gbook
 	Dateiinfo: 	Modulspezifische Funktionen
-	#fv.1000#
+	#fv.1001#
 */
 
 /* SYNTAKTISCHER AUFBAU VON FUNKTIONSNAMEN BEACHTEN!!!
@@ -26,9 +26,8 @@
 
 RETURN: TRUE/FALSE
 */
-if(!function_exists("_01article_DeleteUser")){
-function _01article_DeleteUser($userid,$username,$mail){
-
+if(!function_exists("_01gbook_DeleteUser")){
+function _01gbook_DeleteUser($userid,$username,$mail){
 return TRUE;
 }
 }
@@ -39,20 +38,19 @@ return TRUE;
 
 
 
+// Userstatistiken holen
+/* @param int $userid			UserID, zu der die Infos geholt werden sollen
 
-// String des Artikels, Beitrags, Bildes etc. dem der übergebene IdentifizierungsID zugeordnet ist
-/*$postid			Beitrags-ID
-
-RETURN: String mit dem entsprechenden Text
-*/
-if(!function_exists("_01article_getCommentParentTitle")){
-function _01article_getCommentParentTitle($postid){
-return "n.a.";
+RETURN: Array(
+			statcat[x] 		=> "Statistikbezeichnung für Frontend-Ausgabe"
+			statvalue[x] 	=> "Auszugebender Wert"
+			)
+  */
+if(!function_exists("_01gbook_getUserstats")){
+function _01gbook_getUserstats($userid){
+return false;
 }
 }
-
-
-
 
 
 
@@ -199,5 +197,4 @@ return $return;
 }
 }
 
-// 01-Gästebuch Copyright 2009 by Michael Lorer - 01-Scripts.de
 ?>
