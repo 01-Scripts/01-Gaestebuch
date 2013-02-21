@@ -1,12 +1,12 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
 	Modul:		01gbook
 	Dateiinfo: 	Frontend-Ausgabe
-	#fv.1002#
+	#fv.101#
 */
 
 //Hinweis zum Einbinden des Gästebuchs per include();
@@ -128,12 +128,17 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 				$query_fields .= ", field_".$row['id'];
 				
 				if(isset($_POST['feld_'.$row['id']]) && !empty($_POST['feld_'.$row['id']])){
-					if($flag_utf8 && $row['type'] == "textarea")
-						$query_werte .= ",\n'".mysql_real_escape_string(utf8_decode(htmlentities($_POST['feld_'.$row['id']])))."'";
-					elseif($row['type'] == "text" && !empty($row['length']) && $row['length'] > 0)
-						$query_werte .= ",\n'".mysql_real_escape_string(substr($_POST['feld_'.$row['id']],0,$row['length']))."'";
+					if($row['type'] == "text" && !empty($row['length']) && $row['length'] > 0)
+						$value = substr($_POST['feld_'.$row['id']],0,$row['length']);
 					else
-						$query_werte .= ",\n'".mysql_real_escape_string($_POST['feld_'.$row['id']])."'";
+						$value = $_POST['feld_'.$row['id']];
+
+					if($flag_utf8)
+						$value = htmlentities(utf8_decode($value), $htmlent_flags, $htmlent_encoding_pub);
+					else
+						$value = htmlentities($value, $htmlent_flags, $htmlent_encoding_pub);
+
+					$query_werte .= ",\n'".mysql_real_escape_string($value)."'";
 					}
 				else
 					$query_werte .= ",\n''";
@@ -142,14 +147,17 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 					$email_werte .= stripslashes($row['name'])."\n".$_POST['feld_'.$row['id']]."\n\n";
 					}
 				}
-				
+			
+			if(isset($_POST['deaktiv_bbc']) && $_POST['deaktiv_bbc'] == 1) $deaktiv = 1;
+			else $deaktiv = 0;
+
 			// Eintragung in Datenbank vornehmen:
 			$sql_insert = "INSERT INTO ".$mysql_tables['gb_entry']." (timestamp,uid,ip,frei,bbc_smile_deaktiv".$query_fields.") VALUES (
 							'".time()."',
 							'".mysql_real_escape_string($_POST['uid'])."',
 							'".mysql_real_escape_string($_SERVER['REMOTE_ADDR'])."',
 							'".mysql_real_escape_string($settings['gbookfreeentries'])."',
-							'".mysql_real_escape_string($_POST['deaktiv_bbc'])."'
+							'".$deaktiv."'
 							".$query_werte."
 							)";
 			$result = mysql_query($sql_insert) OR die(mysql_error());
@@ -167,7 +175,11 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 					
 				// E-Mail verschicken?
 				if($settings['gbooksendmail'] == 1){
-					$header = "From:".$settings['email_absender']."<".$settings['email_absender'].">\n";
+					$headerFields = array(
+"From:".$settings['email_absender']."<".$settings['email_absender'].">",
+"MIME-Version: 1.0",
+"Content-Type: text/html;charset=".$htmlent_encoding_pub.""
+);
 					$email_betreff = $settings['sitename']." - Neuer Eintrag im Gästebuch";
 					$email_werte = preg_replace("/(content-type:|bcc:|cc:|to:|from:)/im","",$email_werte);
 					$email_content = "Guten Tag,
@@ -182,7 +194,7 @@ Zum Administrationsbereich gelangen Sie unter:
 ".$settings['absolut_url']."/01acp/
 ---
 Webmailer";
-					mail($emailempf,$email_betreff,$email_content,$header);
+					mail($emailempf,$email_betreff,$email_content,implode("\r\n", $headerFields));
 					}
 				}
 			else
@@ -413,9 +425,5 @@ if($sites > 1){
 include_once($tempdir."pages.html");
 	
 
-
 include_once($tempdir."main_bottom.html");
-
-
-// 01-Gästebuch Copyright 2009 by Michael Lorer - 01-Scripts.de
 ?>

@@ -1,6 +1,6 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
@@ -10,7 +10,7 @@
 				(Workaround, da im 01ACP 1.0.0.2 bisher keine Möglichkeit besteht Modul-Dateien
 				in einem PopUp-Fenster anzeigen zu lassen. Wird mit V 1.0.0.3 eingeführt und dann
 				auch der Dateiinhalt dieser Datei aufgesplittet)
-	#fv.1000#
+	#fv.101#
 */
 
 
@@ -337,9 +337,9 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "save_entry" && $userdat
 			if(isset($_REQUEST['feld_'.$row['id']]) && !empty($_REQUEST['feld_'.$row['id']])){
 				$query_werte .= ",\nfield_".$row['id']." = ";
 				if($row['type'] == "text" && !empty($row['length']) && $row['length'] > 0)
-					$query_werte .= "'".mysql_real_escape_string(substr($_REQUEST['feld_'.$row['id']],0,$row['length']))."'";
+					$query_werte .= "'".mysql_real_escape_string(htmlentities(substr($_REQUEST['feld_'.$row['id']],0,$row['length']), $htmlent_flags, $htmlent_encoding_pub))."'";
 				else
-					$query_werte .= "'".mysql_real_escape_string($_REQUEST['feld_'.$row['id']])."'";
+					$query_werte .= "'".mysql_real_escape_string(htmlentities($_REQUEST['feld_'.$row['id']], $htmlent_flags, $htmlent_encoding_pub))."'";
 				}
 			else
 				$query_werte .= "";
@@ -401,5 +401,4 @@ self.window.close();
 <?PHP
 }//Ende Popup-if-Abfrage
 
-// 01-Gästebuch Copyright 2009 by Michael Lorer - 01-Scripts.de
 ?>

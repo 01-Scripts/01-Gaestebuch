@@ -1,13 +1,13 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
 	Modul:		01gbook
 	Dateiinfo: 	Modulspezifische Grundeinstellungen, Variablendefinitionen etc.
 				Wird automatisch am Anfang jeden Modulaufrufs automatisch includiert.
-	#fv.1000#
+	#fv.101#
 */
 
 // Modul-Spezifische MySQL-Tabellen
@@ -30,13 +30,11 @@ $tempdir	= "templates/";			// Template-Verzeichnis
 // Weitere Variablen
 $namefield_id		= 1;			// Feld-ID, des Name-Eingabefeldes (wird in spezieller Weise ausgegeben)
 $eintragsfield_id 	= 4;			// Feld-ID, des Eingabefeldes, welches für den Gästebucheintragstext zuständig ist (nodelete)
-$emailempf = $settings['email_absender'];	//E-Mail-Empfänger bei neuen Einträgen ins Gästebuch
+if(isset($settings['email_absender'])) $emailempf = $settings['email_absender'];	//E-Mail-Empfänger bei neuen Einträgen ins Gästebuch
 $snip_bbc = "snippet_bbcode.html";
 $snip_smilies = "snippet_smilies.html";
 
 // Variablennamen-Deklaration
 $names['gpage']	= "gpage";
 
-
-// 01-Gästebuch Copyright 2009 by Michael Lorer - 01-Scripts.de
 ?>

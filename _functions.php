@@ -1,12 +1,12 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
 	Modul:		01gbook
 	Dateiinfo: 	Modulspezifische Funktionen
-	#fv.1001#
+	#fv.101#
 */
 
 /* SYNTAKTISCHER AUFBAU VON FUNKTIONSNAMEN BEACHTEN!!!
@@ -145,6 +145,8 @@ if(!function_exists("_01gbook_getEntries_acp")){
 function _01gbook_getEntries_acp($query,$option){
 global $_GET,$modul,$filename,$namefield_id,$eintragsfield_id;
 
+if(!isset($_GET['site'])) $_GET['site'] = 0;
+
 $return = "<form action=\"".$filename."&amp;site=".$_GET['site']."\" method=\"post\">\n";
 $return .= "<table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"3\" cellspacing=\"5\" class=\"rundrahmen\">
 
@@ -167,20 +169,20 @@ while($row = mysql_fetch_array($list)){
 	else
 		$colspan = "";
 	
-	if($row['bbc_smile_deaktiv'] == 0) $x = 1;
+	if(isset($row['bbc_smile_deaktiv']) && $row['bbc_smile_deaktiv'] == 0) $x = 1;
 	else $x = 0;
 	
 	$return .= "<tr id=\"id".$row['id']."\">
 	<td class=\"".$class."\" width=\"25\" align=\"center\"><input type=\"checkbox\" name=\"delid[]\" value=\"".$row['id']."\" /></td>
-	<td class=\"".$class."\"".$colspan." onclick=\"gbpopup('show_entry','".$row['id']."','','',510,450);\" style=\"cursor: pointer;\">
+	<td class=\"".$class."\"".$colspan." onclick=\"gbpopup('show_entry','".$row['id']."','','',580,450);\" style=\"cursor: pointer;\">
 		Am ".date("d.m.Y - H:i",$row['timestamp'])."Uhr von <b>".stripslashes($row['field_'.$namefield_id])."</b> (".$row['ip'].") verfasst:<br />
 		".substr(strip_tags(bb_code_comment(stripslashes($row['field_'.$eintragsfield_id]),1,$x,$x)),0,250)." [...]
 	</td>\n";
 	
 	if($option == "free" && $row['frei'] == 0) $return .= "<td class=\"".$class."\" align=\"center\"><img src=\"images/icons/ok.gif\" alt=\"OK\" title=\"Eintrag freischalten\" id=\"free".$row['id']."\" onclick=\"AjaxRequest.send('modul=".$modul."&ajaxaction=freeentry&id=".$row['id']."');\" /></td>\n";
 	
-	$return .= "<td class=\"".$class."\" align=\"center\"><a href=\"javascript:gbpopup('show_entry','".$row['id']."','','',510,450);\"><img src=\"images/icons/icon_show.gif\" alt=\"Auge\" title=\"Eintrag ansehen\" /></a></td>
-	<td class=\"".$class."\" align=\"center\"><a href=\"javascript:gbpopup('edit_entry','".$row['id']."','','',510,450);\"><img src=\"images/icons/icon_edit.gif\" alt=\"Stift+Papier\" title=\"Eintrag bearbeiten\" /></a></td>
+	$return .= "<td class=\"".$class."\" align=\"center\"><a href=\"javascript:gbpopup('show_entry','".$row['id']."','','',580,450);\"><img src=\"images/icons/icon_show.gif\" alt=\"Auge\" title=\"Eintrag ansehen\" /></a></td>
+	<td class=\"".$class."\" align=\"center\"><a href=\"javascript:gbpopup('edit_entry','".$row['id']."','','',580,450);\"><img src=\"images/icons/icon_edit.gif\" alt=\"Stift+Papier\" title=\"Eintrag bearbeiten\" /></a></td>
 	<td class=\"".$class."\" align=\"center\" nowrap=\"nowrap\"><img src=\"images/icons/icon_delete.gif\" alt=\"L&ouml;schen - rotes X\" title=\"Eintrag l&ouml;schen\" class=\"fx_opener\" style=\"border:0; float:left;\" align=\"left\" /><div class=\"fx_content tr_red\" style=\"width:60px; display:none;\"><a href=\"#foo\" onclick=\"AjaxRequest.send('modul=".$modul."&ajaxaction=delentry&id=".$row['id']."');\">Ja</a> - <a href=\"#foo\">Nein</a></div></td>
 	</tr>\n\n";
 	}
