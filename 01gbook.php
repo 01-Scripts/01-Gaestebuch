@@ -264,7 +264,7 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 			
 			// Vorgabewert bzw. $_POST-Wert übernehmen
 			if(isset($_POST['feld_'.$row['id']]) && !empty($_POST['feld_'.$row['id']]))
-				$wert = " value=\"".stripslashes($_POST['feld_'.$row['id']])."\"";
+				$wert = " value=\"".parse_SafeString($_POST['feld_'.$row['id']])."\"";
 			elseif(isset($row['wert']) && !empty($row['wert']))
 				$wert = " value=\"".stripslashes($row['wert'])."\"";
 			else $wert = "";
@@ -291,7 +291,7 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 		  break;
 		  case "textarea":
 			$size = explode("|",$row['size']);
-			$felder .= "<textarea name=\"feld_".$row['id']."\" rows=\"".$size[0]."\" cols=\"".$size[1]."\" class=\"textareafeld\">".stripslashes($_POST['feld_'.$row['id']])."</textarea>";
+			$felder .= "<textarea name=\"feld_".$row['id']."\" rows=\"".$size[0]."\" cols=\"".$size[1]."\" class=\"textareafeld\">".parse_SafeString($_POST['feld_'.$row['id']])."</textarea>";
 			
 			if($settings['gbookbbc'] == 1 || $settings['gbooksmilies'] == 1)
 				$felder .= "<br /><input type=\"checkbox\" name=\"deaktiv_bbc\" value=\"1\" /> Smilies &amp; BB-Code <b>de</b>aktivieren?";
@@ -304,7 +304,7 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 		</tr>";
 		}
 
-	mt_srand((double)microtime()*1000000); 
+
 	$zahl = mt_rand(1, 9999999999999);
 	$uid = md5(time().$_SERVER['REMOTE_ADDR'].$zahl);
 	// Formular für neuen Eintrag einfügen
