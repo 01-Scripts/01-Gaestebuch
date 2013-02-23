@@ -85,15 +85,15 @@ return $return;
 
 
 
-// Drop-Down zum Sortieren der Gästebuchfelder
-/*$catids			Kommaseparierter CatID-String
+// URL validieren
+/*$url			URL, deren Syntax überprüft werden soll
 
-RETURN: <option>-Tags für select-Feld
+RETURN: TRUE/FALSE
   */
 if(!function_exists("_01gbook_check_url")){
 function _01gbook_check_url($url){
 
-if(empty($url)) return true;
+if(empty($url)) return TRUE;
 else return preg_match('/^(http|https|ftp):\/\/([A-Z0-9][ A-Z0-9_]*(?:\.[A-Z0-9][A-Z0-9_]*)+):?(\d+)?\/?/i', $url);
 
 }

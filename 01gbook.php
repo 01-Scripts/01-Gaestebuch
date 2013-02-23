@@ -47,15 +47,13 @@ if(!isset($_GET[$names['gpage']])) $_GET[$names['gpage']] = "";
 // Variablen
 $tempdir	= $moduldir.$modulvz.$tempdir;			// Template-Verzeichnis
 
-$filename = $_SERVER['PHP_SELF'];
-$sites = 0;
-$flag_showform = false;
-$message = "";
+$filename		= $_SERVER['PHP_SELF'];
+$sites			= 0;
+$flag_showform	= false;
+$message		= "";
 
-$link_form = addParameter2Link($filename,$names['gpage']."=".$_GET[$names['gpage']]);
-$link_addentry = addParameter2Link($filename,"doshow=addentry&amp;".$names['gpage']."=".$_GET[$names['gpage']]);
-
-
+$link_form		= addParameter2Link($filename,$names['gpage']."=".$_GET[$names['gpage']]);
+$link_addentry	= addParameter2Link($filename,"doshow=addentry&amp;".$names['gpage']."=".$_GET[$names['gpage']]);
 
 
 // externe CSS-Datei / CSS-Eigenschaften?
@@ -82,17 +80,18 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
    (isset($_POST['antispam']) && md5($_POST['antispam']) == $_SESSION['antispam01'] && $settings['gbookantispam'] == 1 || $settings['gbookantispam'] == 0)){
 
 	// UID überprüfen
+	$_POST['uid'] = strip_tags($_POST['uid']);
 	$glist = mysql_query("SELECT id FROM ".$mysql_tables['gb_entry']." WHERE uid='".mysql_real_escape_string($_POST['uid'])."'");
 	if(mysql_num_rows($glist) == 0){
 	
-		$error = false;
+		$error = FALSE;
 		// Pflichtfelder & parsing überprüfen
 		$list = mysql_query("SELECT id,parse,pflicht FROM ".$mysql_tables['gb_fields']." WHERE pflicht = '1' OR parse != ''");
 		while($row = mysql_fetch_array($list)){
 
 			if($row['pflicht'] == 1){
 				if(!isset($_POST['feld_'.$row['id']]) || isset($_POST['feld_'.$row['id']]) && empty($_POST['feld_'.$row['id']])){
-					$error = true;
+					$error = TRUE;
 					break;
 					}
 				}
@@ -101,14 +100,14 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 				switch($row['parse']){
 				  case "email":
 				    if(isset($_POST['feld_'.$row['id']]) && !empty($_POST['feld_'.$row['id']]))
-						if(!check_mail($_POST['feld_'.$row['id']])) $error = true;
+						if(!check_mail($_POST['feld_'.$row['id']])) $error = TRUE;
 				  break;
 				  case "url":
 				    if(isset($_POST['feld_'.$row['id']]) && !empty($_POST['feld_'.$row['id']])){
 						if(!strchr($_POST['feld_'.$row['id']],"http://"))
-							$_POST['feld_'.$row['id']] = "http://".$_POST['feld_'.$row['id']];
+							$_POST['feld_'.$row['id']] = "http://".strip_tags($_POST['feld_'.$row['id']]);
 						
-						if(!_01gbook_check_url($_POST['feld_'.$row['id']])) $error = true;
+						if(!_01gbook_check_url($_POST['feld_'.$row['id']])) $error = TRUE;
 						}
 				  break;
 				  }
@@ -120,9 +119,9 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 		// Wenn alle Pflichtfelder ausgefüllt waren und die parsing-Felder korrekt sind Eintrag speichern
 		if(!$error){
 			// Build Insert-Query
-			$query_fields = "";
-			$query_werte = "";
-			$email_werte = "";
+			$query_fields	= "";
+			$query_werte	= "";
+			$email_werte	= "";
 			$list = mysql_query("SELECT id,name,type,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
 			while($row = mysql_fetch_array($list)){
 				$query_fields .= ", field_".$row['id'];
@@ -191,7 +190,7 @@ Inhalt des Eintrags:
 ".$email_werte."
 
 Zum Administrationsbereich gelangen Sie unter:
-".$settings['absolut_url']."/01acp/
+".$settings['absolut_url']."01acp/
 ---
 Webmailer";
 					mail($emailempf,$email_betreff,$email_content,implode("\r\n", $headerFields));
@@ -202,13 +201,13 @@ Webmailer";
 			}
 		else{
 			$message = "pflicht_failed";
-			$flag_showform = true;
+			$flag_showform = TRUE;
 			}
 		}// Ende: UID überprüft
 	}
 elseif(isset($_POST['send_entry']) && $_POST['send_entry'] == 1){
 	$message = "antispam_failed";
-	$flag_showform = true;
+	$flag_showform = TRUE;
 	}
 	
 
@@ -270,7 +269,6 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 			else $wert = "";
 			
 
-			
 			$felder .= "
 			<td class=\"fieldinput\"><input type=\"text\" name=\"feld_".$row['id']."\"".$size.$maxlength.$wert." class=\"input_field\" /></td>";
 		  break;
@@ -279,9 +277,9 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 			$optionarray = explode("\n",$row['wert']);
 			if(is_array($optionarray)){
 				foreach($optionarray as $option){
-					if(isset($_POST['feld_'.$row['id']]) && $_POST['feld_'.$row['id']] == chop($option)) $sel = " selected=\"selected\"";
+					if(isset($_POST['feld_'.$row['id']]) && $_POST['feld_'.$row['id']] == rtrim($option)) $sel = " selected=\"selected\"";
 					else $sel = "";
-					$options .= "<option".$sel.">".chop($option)."</option>\n";
+					$options .= "<option".$sel.">".rtrim($option)."</option>\n";
 					}
 				}
 			else $options = "<option>".$optionarray."</option>\n";
@@ -303,7 +301,6 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 		$felder .= "
 		</tr>";
 		}
-
 
 	$zahl = mt_rand(1, 9999999999999);
 	$uid = md5(time().$_SERVER['REMOTE_ADDR'].$zahl);
