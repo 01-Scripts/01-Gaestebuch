@@ -63,11 +63,11 @@ RETURN: <option>-Tags für select-Feld
   */
 if(!function_exists("_01gbook_FieldSortDropDown")){
 function _01gbook_FieldSortDropDown($selected=1){
-global $mysql_tables;
+global $mysql_tables,$mysqli;
 
 $return = "";
 $menge = 0;
-list($menge) = mysql_fetch_array(mysql_query("SELECT COUNT(*) FROM ".$mysql_tables['gb_fields']." WHERE hide = '0'"));
+list($menge) = $mysqli->query("SELECT COUNT(*) FROM ".$mysql_tables['gb_fields']." WHERE hide = '0'")->fetch_array(MYSQLI_NUM);
 
 for($x=1;$x<=$menge;$x++){
 	if($x == $selected) $return .= "<option selected=\"selected\">".$x."</option>\n";
@@ -113,11 +113,11 @@ RETURN: Assoz. Array
   */
 if(!function_exists("_01gbook_getFields")){
 function _01gbook_getFields($where){
-global $mysql_tables;
+global $mysql_tables,$mysqli;
 
 $fields = array();
-$list = mysql_query("SELECT id,name,type,parse FROM ".$mysql_tables['gb_fields']."".$where." ORDER BY sortorder,name");
-while($row = mysql_fetch_array($list)){
+$list = $mysqli->query("SELECT id,name,type,parse FROM ".$mysql_tables['gb_fields']."".$where." ORDER BY sortorder,name");
+while($row = $list->fetch_assoc()){
 	$fields[$row['id']]['id']		= $row['id'];
 	$fields[$row['id']]['name']		= stripslashes($row['name']);
 	$fields[$row['id']]['type']		= stripslashes($row['type']);
@@ -143,7 +143,7 @@ RETURN: Komplette Liste (HTML)
   */
 if(!function_exists("_01gbook_getEntries_acp")){
 function _01gbook_getEntries_acp($query,$option){
-global $_GET,$modul,$filename,$namefield_id,$eintragsfield_id;
+global $_GET,$modul,$filename,$namefield_id,$eintragsfield_id,$mysqli;
 
 if(!isset($_GET['site'])) $_GET['site'] = 0;
 
@@ -161,8 +161,8 @@ $return .="		<td class=\"tra\" width=\"25\"><!-- Ansehen -->&nbsp;</td>
 	</tr>\n\n";
 
 $count = 0;
-$list = mysql_query($query);
-while($row = mysql_fetch_array($list)){
+$list = $mysqli->query($query);
+while($row = $list->fetch_assoc()){
 	if($count == 1){ $class = "tra"; $count--; }else{ $class = "trb"; $count++; }
 	if($option == "free" && $row['frei'] == 1)
 		$colspan = " colspan=\"2\"";

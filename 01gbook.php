@@ -81,13 +81,13 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 
 	// UID überprüfen
 	$_POST['uid'] = strip_tags($_POST['uid']);
-	$glist = mysql_query("SELECT id FROM ".$mysql_tables['gb_entry']." WHERE uid='".mysql_real_escape_string($_POST['uid'])."'");
-	if(mysql_num_rows($glist) == 0){
+	$glist = $mysqli->query("SELECT id FROM ".$mysql_tables['gb_entry']." WHERE uid='".$mysqli->escape_string($_POST['uid'])."'");
+	if($glist->num_rows == 0){
 	
 		$error = FALSE;
 		// Pflichtfelder & parsing überprüfen
-		$list = mysql_query("SELECT id,parse,pflicht FROM ".$mysql_tables['gb_fields']." WHERE pflicht = '1' OR parse != ''");
-		while($row = mysql_fetch_array($list)){
+		$list = $mysqli->query("SELECT id,parse,pflicht FROM ".$mysql_tables['gb_fields']." WHERE pflicht = '1' OR parse != ''");
+		while($row = $list->fetch_assoc()){
 
 			if($row['pflicht'] == 1){
 				if(!isset($_POST['feld_'.$row['id']]) || isset($_POST['feld_'.$row['id']]) && empty($_POST['feld_'.$row['id']])){
@@ -122,8 +122,8 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 			$query_fields	= "";
 			$query_werte	= "";
 			$email_werte	= "";
-			$list = mysql_query("SELECT id,name,type,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
-			while($row = mysql_fetch_array($list)){
+			$list = $mysqli->query("SELECT id,name,type,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
+			while($row = $list->fetch_assoc()){
 				$query_fields .= ", field_".$row['id'];
 				
 				if(isset($_POST['feld_'.$row['id']]) && !empty($_POST['feld_'.$row['id']])){
@@ -137,7 +137,7 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 					else
 						$value = htmlentities($value, $htmlent_flags, $htmlent_encoding_pub);
 
-					$query_werte .= ",\n'".mysql_real_escape_string($value)."'";
+					$query_werte .= ",\n'".$mysqli->escape_string($value)."'";
 					}
 				else
 					$query_werte .= ",\n''";
@@ -153,14 +153,14 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 			// Eintragung in Datenbank vornehmen:
 			$sql_insert = "INSERT INTO ".$mysql_tables['gb_entry']." (timestamp,uid,ip,frei,bbc_smile_deaktiv".$query_fields.") VALUES (
 							'".time()."',
-							'".mysql_real_escape_string($_POST['uid'])."',
-							'".mysql_real_escape_string($_SERVER['REMOTE_ADDR'])."',
-							'".mysql_real_escape_string($settings['gbookfreeentries'])."',
+							'".$mysqli->escape_string($_POST['uid'])."',
+							'".$mysqli->escape_string($_SERVER['REMOTE_ADDR'])."',
+							'".$mysqli->escape_string($settings['gbookfreeentries'])."',
 							'".$deaktiv."'
 							".$query_werte."
 							)";
-			$result = mysql_query($sql_insert) OR die(mysql_error());
-			$inserted_id = mysql_insert_id();
+			$mysqli->query($sql_insert) OR die($mysqli->error);
+			$inserted_id = $mysqli->insert_id;
 			
 			if($inserted_id > 0){
 				if($settings['gbookfreeentries'] == 0){
@@ -219,8 +219,8 @@ include($tempdir."messages.html");
 // Felder auflisten
 if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 	$felder = "";
-	$list = mysql_query("SELECT * FROM ".$mysql_tables['gb_fields']." ORDER BY sortorder,name");
-	while($row = mysql_fetch_array($list)){
+	$list = $mysqli->query("SELECT * FROM ".$mysql_tables['gb_fields']." ORDER BY sortorder,name");
+	while($row = $list->fetch_assoc()){
 		if(!isset($_POST['feld_'.$row['id']])) $_POST['feld_'.$row['id']] = "";
 		
 		// Sonderfeld (Eingabefeld) ID == $eintragsfield_id ?
@@ -324,8 +324,8 @@ echo "<!-- 2559ad821dde361560dbf967c3406f51 -->";
 makepages($query,$sites,$names['gpage'],$settings['gbook_perpage']);
 
 // Einträge auflisten
-$list = mysql_query($query);
-while($row = mysql_fetch_array($list)){
+$list = $mysqli->query($query);
+while($row = $list->fetch_assoc()){
 	$feldinhalte= "";
 	$datum		= date("d.m.y",$row['timestamp']);
 	$uhrzeit	= date("G:i",$row['timestamp']);

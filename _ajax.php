@@ -19,7 +19,7 @@
 if(isset($_REQUEST['ajaxaction']) && $_REQUEST['ajaxaction'] == "delentry" &&
    isset($_REQUEST['id']) && !empty($_REQUEST['id']) &&
    $userdata[$modul] == 1){
-	mysql_query("DELETE FROM ".$mysql_tables['gb_entry']." WHERE id='".mysql_real_escape_string($_REQUEST['id'])."' LIMIT 1");
+	$mysqli->query("DELETE FROM ".$mysql_tables['gb_entry']." WHERE id='".$mysqli->escape_string($_REQUEST['id'])."' LIMIT 1");
 	
 	echo "<script> Success_delfade('id".$_REQUEST['id']."'); </script>";
 	}
@@ -27,7 +27,7 @@ if(isset($_REQUEST['ajaxaction']) && $_REQUEST['ajaxaction'] == "delentry" &&
 elseif(isset($_REQUEST['ajaxaction']) && $_REQUEST['ajaxaction'] == "freeentry" &&
    isset($_REQUEST['id']) && !empty($_REQUEST['id']) &&
    $userdata['editcomments'] == 1){
-    mysql_query("UPDATE ".$mysql_tables['gb_entry']." SET frei='1' WHERE id='".mysql_real_escape_string($_REQUEST['id'])."' LIMIT 1");
+    $mysqli->query("UPDATE ".$mysql_tables['gb_entry']." SET frei='1' WHERE id='".$mysqli->escape_string($_REQUEST['id'])."' LIMIT 1");
 	
 	echo "<script> Success_CFree('free".$_REQUEST['id']."'); </script>";
 	}
@@ -78,9 +78,8 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "show_entry" && $userdat
 	$fields = _01gbook_getFields("");
 
 	// Eintrag aus DB holen
-	$query = "SELECT * FROM ".$mysql_tables['gb_entry']." WHERE id = '".mysql_real_escape_string($_REQUEST['var1'])."' LIMIT 1";
-	$list = mysql_query($query);
-	while($row = mysql_fetch_array($list)){
+	$list = $mysqli->query("SELECT * FROM ".$mysql_tables['gb_entry']." WHERE id = '".$mysqli->escape_string($_REQUEST['var1'])."' LIMIT 1");
+	while($row = $list->fetch_assoc()){
 		$feldinhalte = "";
 		echo "<p>Geschrieben von <b>".stripslashes($row['field_'.$namefield_id])."</b> (".$row['ip'].") 
 				am <b>".date("d.m.Y",$row['timestamp'])."</b>, <b>".date("H:i",$row['timestamp'])."</b> Uhr</p>";
@@ -152,9 +151,8 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "edit_entry" && $userdat
 	echo "<h2>Eintrag bearbeiten</h2>";
 	
 	// Eintrag aus DB holen
-	$query = "SELECT * FROM ".$mysql_tables['gb_entry']." WHERE id = '".mysql_real_escape_string($_REQUEST['var1'])."' LIMIT 1";
-	$list = mysql_query($query);
-	while($row = mysql_fetch_array($list)){
+	$list = $mysqli->query("SELECT * FROM ".$mysql_tables['gb_entry']." WHERE id = '".$mysqli->escape_string($_REQUEST['var1'])."' LIMIT 1");
+	while($row = $list->fetch_assoc()){
 		if($row['bbc_smile_deaktiv'] == 1) $c1 = " checked=\"checked\"";
 		else $c1 = "";
 		
@@ -163,8 +161,8 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "edit_entry" && $userdat
 
 		$felder = "";
 		$count = 0;
-		$listfields = mysql_query("SELECT * FROM ".$mysql_tables['gb_fields']." ORDER BY sortorder,name");
-		while($rowf = mysql_fetch_array($listfields)){
+		$listfields = $mysqli->query("SELECT * FROM ".$mysql_tables['gb_fields']." ORDER BY sortorder,name");
+		while($rowf = $listfields->fetch_assoc()){
 			if($count == 1){ $class = "tra"; $count--; }else{ $class = "trb"; $count++; }
 			
 			// Sonderfeld (Eingabefeld) ID == $eintragsfield_id ?
@@ -298,8 +296,8 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "save_entry" && $userdat
 	
 	// Pflichtfelder & parsing überprüfen
 	$error = false;
-	$list = mysql_query("SELECT id,parse,pflicht FROM ".$mysql_tables['gb_fields']." WHERE pflicht = '1' OR parse != ''");
-	while($row = mysql_fetch_array($list)){
+	$list = $mysqli->query("SELECT id,parse,pflicht FROM ".$mysql_tables['gb_fields']." WHERE pflicht = '1' OR parse != ''");
+	while($row = $list->fetch_assoc()){
 
 		if($row['pflicht'] == 1){
 			if(!isset($_REQUEST['feld_'.$row['id']]) || isset($_REQUEST['feld_'.$row['id']]) && empty($_REQUEST['feld_'.$row['id']])){
@@ -332,23 +330,23 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "save_entry" && $userdat
 		if(!isset($_REQUEST['deaktiv_bbc']) || isset($_REQUEST['deaktiv_bbc']) && empty($_REQUEST['deaktiv_bbc'])) $_REQUEST['deaktiv_bbc'] = 0;
 		// Build Update-Query
 		$query_werte = "";
-		$list = mysql_query("SELECT id,name,type,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
-		while($row = mysql_fetch_array($list)){
+		$list = $mysqli->query("SELECT id,name,type,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
+		while($row = $list->fetch_assoc()){
 			if(isset($_REQUEST['feld_'.$row['id']]) && !empty($_REQUEST['feld_'.$row['id']])){
 				$query_werte .= ",\nfield_".$row['id']." = ";
 				if($row['type'] == "text" && !empty($row['length']) && $row['length'] > 0)
-					$query_werte .= "'".mysql_real_escape_string(htmlentities(substr($_REQUEST['feld_'.$row['id']],0,$row['length']), $htmlent_flags, $htmlent_encoding_pub))."'";
+					$query_werte .= "'".$mysqli->escape_string(htmlentities(substr($_REQUEST['feld_'.$row['id']],0,$row['length']), $htmlent_flags, $htmlent_encoding_pub))."'";
 				else
-					$query_werte .= "'".mysql_real_escape_string(htmlentities($_REQUEST['feld_'.$row['id']], $htmlent_flags, $htmlent_encoding_pub))."'";
+					$query_werte .= "'".$mysqli->escape_string(htmlentities($_REQUEST['feld_'.$row['id']], $htmlent_flags, $htmlent_encoding_pub))."'";
 				}
 			else
 				$query_werte .= "";
 			}
 
-		mysql_query("UPDATE ".$mysql_tables['gb_entry']." SET 
-					bbc_smile_deaktiv 	=	'".mysql_real_escape_string($_REQUEST['deaktiv_bbc'])."'
+		$mysqli->query("UPDATE ".$mysql_tables['gb_entry']." SET 
+					bbc_smile_deaktiv 	=	'".$mysqli->escape_string($_REQUEST['deaktiv_bbc'])."'
 					".$query_werte."
-					WHERE id = '".mysql_real_escape_string($_REQUEST['var1'])."' LIMIT 1");
+					WHERE id = '".$mysqli->escape_string($_REQUEST['var1'])."' LIMIT 1");
 
 		echo "
 <script type=\"text/javascript\">
@@ -383,7 +381,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "del_entry" && $userdata
 if(isset($_REQUEST['action']) && $_REQUEST['action'] == "dodel_entry" && $userdata[$modul] == 1 &&
 	isset($_REQUEST['var1']) && !empty($_REQUEST['var1']) && is_numeric($_REQUEST['var1'])){
 	
-	mysql_query("DELETE FROM ".$mysql_tables['gb_entry']." WHERE id='".mysql_real_escape_string($_REQUEST['var1'])."' LIMIT 1");
+	$mysqli->query("DELETE FROM ".$mysql_tables['gb_entry']." WHERE id='".$mysqli->escape_string($_REQUEST['var1'])."' LIMIT 1");
 	
 	echo "
 <script type=\"text/javascript\">

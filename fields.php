@@ -1,13 +1,12 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
 	Modul:		01gbook
-	Dateiinfo: 	Modulspezifische Grundeinstellungen, Variablendefinitionen etc.
-				Wird automatisch am Anfang jeden Modulaufrufs automatisch includiert.
-	#fv.1000#
+	Dateiinfo: 	Eigene Eingabefelder für das Gästebuch definieren oder bearbeiten
+	#fv.101#
 */
 
 if($userdata['settings'] == 1){
@@ -23,21 +22,21 @@ if(isset($_POST['do']) && $_POST['do'] == "addfield" &&
     
 	// Standardwert
 	if(($_POST['type'] == "text" || $_POST['type'] == "select") && isset($_POST['wert']) && !empty($_POST['wert']))
-		$mysql_wert = mysql_real_escape_string($_POST['wert']);
+		$mysql_wert = $mysqli->escape_string($_POST['wert']);
 	else
 		$mysql_wert = "";
 		
 	// Parsing?
 	if($_POST['type'] == "text" && isset($_POST['specialparse']) && !empty($_POST['specialparse']))
-		$parse = mysql_real_escape_string($_POST['specialparse']);
+		$parse = $mysqli->escape_string($_POST['specialparse']);
 	else
 		$parse = "";
 		
 	// Feldlänge (bzw. Spalten/Rows)
 	if($_POST['type'] == "text" && isset($_POST['size']) && is_numeric($_POST['size']))
-		$size = mysql_real_escape_string($_POST['size']);
+		$size = $mysqli->escape_string($_POST['size']);
 	elseif($_POST['type'] == "textarea" && isset($_POST['rows']) && is_numeric($_POST['rows']) && isset($_POST['cols']) && is_numeric($_POST['cols']))
-		$size = mysql_real_escape_string($_POST['rows']."|".$_POST['cols']);
+		$size = $mysqli->escape_string($_POST['rows']."|".$_POST['cols']);
 	elseif($_POST['type'] == "textarea")
 		$size = "7|50";
 	else
@@ -45,33 +44,33 @@ if(isset($_POST['do']) && $_POST['do'] == "addfield" &&
 		
 	// Max. Eingabelänge
 	if($_POST['type'] == "text" && isset($_POST['length']) && is_numeric($_POST['length']) && $_POST['length'] > 0 && $_POST['length'] <= 255)
-		$maxlength = mysql_real_escape_string($_POST['length']);
+		$maxlength = $mysqli->escape_string($_POST['length']);
 	else
 		$maxlength = "";
 	
     // Eintragung in Datenbank vornehmen:
 	$sql_insert = "INSERT INTO ".$mysql_tables['gb_fields']." (name,type,wert,parse,size,length,pflicht,public,hide) VALUES (
-					'".mysql_real_escape_string($_POST['feldname'])."',
-					'".mysql_real_escape_string($_POST['type'])."',
+					'".$mysqli->escape_string($_POST['feldname'])."',
+					'".$mysqli->escape_string($_POST['type'])."',
 					'".$mysql_wert."',
 					'".$parse."',
 					'".$size."',
 					'".$maxlength."',
-					'".mysql_real_escape_string($_POST['pflicht'])."',
-					'".mysql_real_escape_string($_POST['public'])."',
+					'".$mysqli->escape_string($_POST['pflicht'])."',
+					'".$mysqli->escape_string($_POST['public'])."',
 					'0'
 					)";
-	$result = mysql_query($sql_insert) OR die(mysql_error());
-	$inserted_id = mysql_insert_id();
+	$mysqli->query($sql_insert) OR die($mysqli->error);
+	$inserted_id = $mysqli->insert_id;
 
 	
 	if($inserted_id > 0){
 		if($_POST['type'] == "textarea")
-			mysql_query("ALTER TABLE `".$mysql_tables['gb_entry']."` ADD `field_".mysql_real_escape_string($inserted_id)."` TEXT NULL COMMENT '".mysql_real_escape_string($_POST['feldname'])."'");
+			$mysqli->query("ALTER TABLE `".$mysql_tables['gb_entry']."` ADD `field_".$mysqli->escape_string($inserted_id)."` TEXT NULL COMMENT '".$mysqli->escape_string($_POST['feldname'])."'");
 		elseif($_POST['type'] == "text" && $maxlength > 0 && $maxlength <= 255)
-			mysql_query("ALTER TABLE `".$mysql_tables['gb_entry']."` ADD `field_".mysql_real_escape_string($inserted_id)."` VARCHAR( ".$maxlength." ) NOT NULL COMMENT '".mysql_real_escape_string($_POST['feldname'])."'");
+			$mysqli->query("ALTER TABLE `".$mysql_tables['gb_entry']."` ADD `field_".$mysqli->escape_string($inserted_id)."` VARCHAR( ".$maxlength." ) NOT NULL COMMENT '".$mysqli->escape_string($_POST['feldname'])."'");
 		else
-			mysql_query("ALTER TABLE `".$mysql_tables['gb_entry']."` ADD `field_".mysql_real_escape_string($inserted_id)."` VARCHAR( 255 ) NOT NULL COMMENT '".mysql_real_escape_string($_POST['feldname'])."'");
+			$mysqli->query("ALTER TABLE `".$mysql_tables['gb_entry']."` ADD `field_".$mysqli->escape_string($inserted_id)."` VARCHAR( 255 ) NOT NULL COMMENT '".$mysqli->escape_string($_POST['feldname'])."'");
 		
 		echo "<p class=\"meldung_erfolg\">Neues Feld wurde erfolgreich angelegt.</p>";
 		}
@@ -92,34 +91,34 @@ if(isset($_POST['do']) && $_POST['do'] == "editfield" &&
     
 	// Standardwert
 	if(($_POST['type'] == "text" || $_POST['type'] == "select") && isset($_POST['wert']) && !empty($_POST['wert']))
-		$mysql_wert = mysql_real_escape_string($_POST['wert']);
+		$mysql_wert = $mysqli->escape_string($_POST['wert']);
 	else
 		$mysql_wert = "";
 		
 	// Parsing?
 	if($_POST['type'] == "text" && isset($_POST['specialparse']) && !empty($_POST['specialparse']))
-		$parse = mysql_real_escape_string($_POST['specialparse']);
+		$parse = $mysqli->escape_string($_POST['specialparse']);
 	else
 		$parse = "";
 	
 	// Feldlänge (bzw. Spalten/Rows)
 	if($_POST['type'] == "text" && isset($_POST['size']) && is_numeric($_POST['size']))
-		$size = mysql_real_escape_string($_POST['size']);
+		$size = $mysqli->escape_string($_POST['size']);
 	elseif($_POST['type'] == "textarea" && isset($_POST['rows']) && is_numeric($_POST['rows']) && isset($_POST['cols']) && is_numeric($_POST['cols']))
-		$size = mysql_real_escape_string($_POST['rows']."|".$_POST['cols']);
+		$size = $mysqli->escape_string($_POST['rows']."|".$_POST['cols']);
 	elseif($_POST['type'] == "textarea")
 		$size = "7|50";
 	else
 		$size = "";
 	
-	mysql_query("UPDATE ".$mysql_tables['gb_fields']." SET 
-				name 		= '".mysql_real_escape_string($_POST['feldname'])."',
+	$mysqli->query("UPDATE ".$mysql_tables['gb_fields']." SET 
+				name 		= '".$mysqli->escape_string($_POST['feldname'])."',
 				wert 		= '".$mysql_wert."',
 				parse		= '".$parse."',
 				size 		= '".$size."',
-				pflicht 	= '".mysql_real_escape_string($_POST['pflicht'])."',
-				public	 	= '".mysql_real_escape_string($_POST['public'])."'
-				WHERE id = '".mysql_real_escape_string($_POST['id'])."' AND hide = '0' LIMIT 1");
+				pflicht 	= '".$mysqli->escape_string($_POST['pflicht'])."',
+				public	 	= '".$mysqli->escape_string($_POST['public'])."'
+				WHERE id = '".$mysqli->escape_string($_POST['id'])."' AND hide = '0' LIMIT 1");
 	
 	echo "<p class=\"meldung_erfolg\">Feld wurder aktualisiert</p>";
 	}
@@ -156,8 +155,8 @@ if(isset($_POST['addfield']) && !empty($_POST['addfield']) &&
 elseif(isset($_GET['do']) && $_GET['do'] == "editfieldform" &&
        isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
 	
-	$list = mysql_query("SELECT * FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' AND id = '".mysql_real_escape_string($_GET['id'])."'");
-	while($row = mysql_fetch_array($list)){
+	$list = $mysqli->query("SELECT * FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' AND id = '".$mysqli->escape_string($_GET['id'])."'");
+	while($row = $list->fetch_assoc()){
 		if($row['type'] == "textarea"){
 			$array = explode("|",$row['size']);
 			$zeilen = $array[0];
@@ -199,10 +198,10 @@ if(isset($_GET['do']) && $_GET['do'] == "delfield" && isset($_GET['id']) && !emp
 
 // Löschen durchführen
 if(isset($_GET['do']) && $_GET['do'] == "dodelfield" && isset($_GET['id']) && !empty($_GET['id']) && is_numeric($_GET['id'])){
-	mysql_query("DELETE FROM ".$mysql_tables['gb_fields']." WHERE id = '".mysql_real_escape_string($_GET['id'])."' AND nodelete = '0' LIMIT 1");
+	$mysqli->query("DELETE FROM ".$mysql_tables['gb_fields']." WHERE id = '".$mysqli->escape_string($_GET['id'])."' AND nodelete = '0' LIMIT 1");
 	
-	if(mysql_affected_rows() > 0){
-		mysql_query("ALTER TABLE `".$mysql_tables['gb_entry']."` DROP `field_".mysql_real_escape_string($_GET['id'])."`");
+	if($mysqli->affected_rows > 0){
+		$mysqli->query("ALTER TABLE `".$mysql_tables['gb_entry']."` DROP `field_".$mysqli->escape_string($_GET['id'])."`");
 		echo "<p class=\"meldung_erfolg\">Feld wurde erfolgreich gel&ouml;scht.</p>";
 		}
 	else
@@ -252,15 +251,15 @@ if(isset($_GET['do']) && $_GET['do'] == "dodelfield" && isset($_GET['id']) && !e
 <?PHP
 // Sortierung vornehmen
 if(isset($_POST['sort']) && !empty($_POST['sort'])){
-	$list = mysql_query("SELECT id,sortorder FROM ".$mysql_tables['gb_fields']." WHERE hide = '0'");
-	while($row = mysql_fetch_array($list)){
-		mysql_query("UPDATE ".$mysql_tables['gb_fields']." SET sortorder='".mysql_real_escape_string($_POST['field_'.$row['id']])."' WHERE id='".$row['id']."' LIMIT 1");
+	$list = $mysqli->query("SELECT id,sortorder FROM ".$mysql_tables['gb_fields']." WHERE hide = '0'");
+	while($row = $list->fetch_assoc()){
+		$mysqli->query("UPDATE ".$mysql_tables['gb_fields']." SET sortorder='".$mysqli->escape_string($_POST['field_'.$row['id']])."' WHERE id='".$row['id']."' LIMIT 1");
 		}
 	}
 
 $count = 0;
-$list = mysql_query("SELECT id,sortorder,name,type,pflicht,public,nodelete FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' ORDER BY sortorder,name");
-while($row = mysql_fetch_array($list)){
+$list = $mysqli->query("SELECT id,sortorder,name,type,pflicht,public,nodelete FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' ORDER BY sortorder,name");
+while($row = $list->fetch_assoc()){
 	if($count == 1){ $class = "tra"; $count--; }else{ $class = "trb"; $count++; }
 	
 	// Feldtyp
@@ -314,5 +313,4 @@ if($count == 1){ $class = "tra"; $count--; }else{ $class = "trb"; $count++; }
 <?PHP
 }else $flag_loginerror = true;
 
-// 01-Gästebuch Copyright 2009 by Michael Lorer - 01-Scripts.de
 ?>
