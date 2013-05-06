@@ -216,7 +216,6 @@ if(isset($_GET['do']) && $_GET['do'] == "dodelfield" && isset($_GET['id']) && !e
 
 
 
-
 // Auflistung
 ?>
 
