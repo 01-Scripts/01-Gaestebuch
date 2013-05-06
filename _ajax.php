@@ -157,7 +157,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "edit_entry" && $userdat
 		else $c1 = "";
 		
 		echo "<form action=\"".$filename."\" method=\"post\" name=\"post\">
-	<table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"3\" cellspacing=\"5\" class=\"rundrahmen\">";
+	<table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"3\" cellspacing=\"5\" class=\"rundrahmen trab\">";
 
 		$felder = "";
 		$count = 0;

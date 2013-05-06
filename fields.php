@@ -237,7 +237,7 @@ if(isset($_GET['do']) && $_GET['do'] == "dodelfield" && isset($_GET['id']) && !e
 </form>
 
 <form action="<?PHP echo $filename; ?>" method="post">
-<table border="0" align="center" width="100%" cellpadding="3" cellspacing="5" class="rundrahmen">
+<table border="0" align="center" width="100%" cellpadding="3" cellspacing="5" class="rundrahmen trab">
 	<tr>
 		<td class="tra" width="90" align="center"><b>Reihenfolge</b></td>
 		<td class="tra"><b>Name</b></td>
@@ -257,10 +257,8 @@ if(isset($_POST['sort']) && !empty($_POST['sort'])){
 		}
 	}
 
-$count = 0;
 $list = $mysqli->query("SELECT id,sortorder,name,type,pflicht,public,nodelete FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' ORDER BY sortorder,name");
 while($row = $list->fetch_assoc()){
-	if($count == 1){ $class = "tra"; $count--; }else{ $class = "trb"; $count++; }
 	
 	// Feldtyp
 	switch($row['type']){
@@ -287,20 +285,19 @@ while($row = $list->fetch_assoc()){
 	else $del = "&nbsp;";
 	
 	echo "    <tr>
-		<td class=\"".$class."\" align=\"center\"><select name=\"field_".$row['id']."\" size=\"1\" class=\"input_select\">"._01gbook_FieldSortDropDown($row['sortorder'])."</select></td>
-		<td class=\"".$class."\">".stripslashes($row['name'])."</td>
-		<td class=\"".$class."\">".$fieldtype."</td>
-		<td class=\"".$class."\" align=\"center\">".$pfl."</td>
-		<td class=\"".$class."\" align=\"center\">".$pub."</td>
-		<td class=\"".$class."\" align=\"center\"><a href=\"".$filename."&amp;do=editfieldform&amp;id=".$row['id']."\"><img src=\"images/icons/icon_edit.gif\" alt=\"Stift\" title=\"Feld bearbeiten\" /></a></td>
-		<td class=\"".$class."\" align=\"center\">".$del."</td>
+		<td align=\"center\"><select name=\"field_".$row['id']."\" size=\"1\" class=\"input_select\">"._01gbook_FieldSortDropDown($row['sortorder'])."</select></td>
+		<td>".stripslashes($row['name'])."</td>
+		<td>".$fieldtype."</td>
+		<td align=\"center\">".$pfl."</td>
+		<td align=\"center\">".$pub."</td>
+		<td align=\"center\"><a href=\"".$filename."&amp;do=editfieldform&amp;id=".$row['id']."\"><img src=\"images/icons/icon_edit.gif\" alt=\"Stift\" title=\"Feld bearbeiten\" /></a></td>
+		<td align=\"center\">".$del."</td>
 	</tr>\n\n";
 	}
-if($count == 1){ $class = "tra"; $count--; }else{ $class = "trb"; $count++; }
 ?>
 	<tr>
-		<td class="<?PHP echo $class; ?>" align="center"><input type="submit" name="sort" value="Sortieren" class="input" /></td>
-		<td class="<?PHP echo $class; ?>" colspan="6">&nbsp;</td>
+		<td align="center"><input type="submit" name="sort" value="Sortieren" class="input" /></td>
+		<td colspan="6">&nbsp;</td>
 	</tr>	
 
 </table>

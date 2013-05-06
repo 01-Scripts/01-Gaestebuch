@@ -148,7 +148,7 @@ global $_GET,$modul,$filename,$namefield_id,$eintragsfield_id,$mysqli;
 if(!isset($_GET['site'])) $_GET['site'] = 0;
 
 $return = "<form action=\"".$filename."&amp;site=".$_GET['site']."\" method=\"post\">\n";
-$return .= "<table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"3\" cellspacing=\"5\" class=\"rundrahmen\">
+$return .= "<table border=\"0\" align=\"center\" width=\"100%\" cellpadding=\"3\" cellspacing=\"5\" class=\"rundrahmen trab\">
 
     <tr>
 		<td class=\"tra\" colspan=\"2\"><b>G&auml;stebuch-Eintr&auml;ge</b></td>\n";
@@ -160,10 +160,8 @@ $return .="		<td class=\"tra\" width=\"25\"><!-- Ansehen -->&nbsp;</td>
 		<td class=\"tra\" width=\"25\" align=\"center\"><img src=\"images/icons/icon_trash.gif\" alt=\"M&uuml;lleimer\" title=\"Kommentar l&ouml;schen\" /></td>
 	</tr>\n\n";
 
-$count = 0;
 $list = $mysqli->query($query);
 while($row = $list->fetch_assoc()){
-	if($count == 1){ $class = "tra"; $count--; }else{ $class = "trb"; $count++; }
 	if($option == "free" && $row['frei'] == 1)
 		$colspan = " colspan=\"2\"";
 	else
@@ -173,17 +171,17 @@ while($row = $list->fetch_assoc()){
 	else $x = 0;
 	
 	$return .= "<tr id=\"id".$row['id']."\">
-	<td class=\"".$class."\" width=\"25\" align=\"center\"><input type=\"checkbox\" name=\"delid[]\" value=\"".$row['id']."\" /></td>
-	<td class=\"".$class."\"".$colspan." onclick=\"gbpopup('show_entry','".$row['id']."','','',580,450);\" style=\"cursor: pointer;\">
+	<td width=\"25\" align=\"center\"><input type=\"checkbox\" name=\"delid[]\" value=\"".$row['id']."\" /></td>
+	<td".$colspan." onclick=\"gbpopup('show_entry','".$row['id']."','','',580,450);\" style=\"cursor: pointer;\">
 		Am ".date("d.m.Y - H:i",$row['timestamp'])."Uhr von <b>".stripslashes($row['field_'.$namefield_id])."</b> (".$row['ip'].") verfasst:<br />
 		".substr(strip_tags(bb_code_comment(stripslashes($row['field_'.$eintragsfield_id]),1,$x,$x)),0,250)." [...]
 	</td>\n";
 	
-	if($option == "free" && $row['frei'] == 0) $return .= "<td class=\"".$class."\" align=\"center\"><img src=\"images/icons/ok.gif\" alt=\"OK\" title=\"Eintrag freischalten\" id=\"free".$row['id']."\" onclick=\"AjaxRequest.send('modul=".$modul."&ajaxaction=freeentry&id=".$row['id']."');\" /></td>\n";
+	if($option == "free" && $row['frei'] == 0) $return .= "<td align=\"center\"><img src=\"images/icons/ok.gif\" alt=\"OK\" title=\"Eintrag freischalten\" id=\"free".$row['id']."\" onclick=\"AjaxRequest.send('modul=".$modul."&ajaxaction=freeentry&id=".$row['id']."');\" /></td>\n";
 	
-	$return .= "<td class=\"".$class."\" align=\"center\"><a href=\"javascript:gbpopup('show_entry','".$row['id']."','','',580,450);\"><img src=\"images/icons/icon_show.gif\" alt=\"Auge\" title=\"Eintrag ansehen\" /></a></td>
-	<td class=\"".$class."\" align=\"center\"><a href=\"javascript:gbpopup('edit_entry','".$row['id']."','','',580,450);\"><img src=\"images/icons/icon_edit.gif\" alt=\"Stift+Papier\" title=\"Eintrag bearbeiten\" /></a></td>
-	<td class=\"".$class."\" align=\"center\" nowrap=\"nowrap\"><img src=\"images/icons/icon_delete.gif\" alt=\"L&ouml;schen - rotes X\" title=\"Eintrag l&ouml;schen\" class=\"fx_opener\" style=\"border:0; float:left;\" align=\"left\" /><div class=\"fx_content tr_red\" style=\"width:60px; display:none;\"><a href=\"#foo\" onclick=\"AjaxRequest.send('modul=".$modul."&ajaxaction=delentry&id=".$row['id']."');\">Ja</a> - <a href=\"#foo\">Nein</a></div></td>
+	$return .= "<td align=\"center\"><a href=\"javascript:gbpopup('show_entry','".$row['id']."','','',580,450);\"><img src=\"images/icons/icon_show.gif\" alt=\"Auge\" title=\"Eintrag ansehen\" /></a></td>
+	<td align=\"center\"><a href=\"javascript:gbpopup('edit_entry','".$row['id']."','','',580,580);\"><img src=\"images/icons/icon_edit.gif\" alt=\"Stift+Papier\" title=\"Eintrag bearbeiten\" /></a></td>
+	<td align=\"center\" nowrap=\"nowrap\"><img src=\"images/icons/icon_delete.gif\" alt=\"L&ouml;schen - rotes X\" title=\"Eintrag l&ouml;schen\" class=\"fx_opener\" style=\"border:0; float:left;\" align=\"left\" /><div class=\"fx_content tr_red\" style=\"width:60px; display:none;\"><a href=\"#foo\" onclick=\"AjaxRequest.send('modul=".$modul."&ajaxaction=delentry&id=".$row['id']."');\">Ja</a> - <a href=\"#foo\">Nein</a></div></td>
 	</tr>\n\n";
 	}
 

@@ -1,7 +1,7 @@
 <?php if (isset($sites) && $sites > 1): ?>
 <table align="center" class="table_page page_text">
     <tr>
-        <td align="center" width="33%" valign="top">
+        <td align="center" width="30%" valign="top">
 	        <?php if (isset($szl1) && !empty($szl1)): ?>
 				<a href="<?php echo $szl1; ?>">&laquo; 1</a>
 			<?php endif; ?>
@@ -9,16 +9,15 @@
 				<a href="<?php echo $szl2; ?>">&laquo; Zur Seite <?php echo $sz; ?></a>
 			<?php endif; ?>
         </td>
-        <td align="center" width="33%" valign="top">
+        <td align="center" width="40%" valign="top">
             <form action="<?PHP echo $filename; ?>" method="get">
 			<input type="submit" value="Seite" class="input_button" />
 			<select name="<?PHP echo $names['gpage']; ?>" size="1" class="input_selectfield">
 			<?PHP echo $option_sites; ?>
-			</select>
+			</select> <b>von <?PHP echo $sites; ?></b>
 			</form>
-			<b>von <?PHP echo $sites; ?></b>
         </td>
-        <td align="center" width="33%" valign="top">
+        <td align="center" width="30%" valign="top">
 			<?php if (isset($sv) && $sv <= $sites): ?>
 				<a href="<?php echo $svl1; ?>">Zur Seite <?php echo $sv; ?> &raquo;</a>
 	        <?php endif; ?>
@@ -31,7 +30,7 @@
 <?php endif; ?>
 
 <p align="center" class="copyright">
-<b>01-G&auml;stebuch</b> &copy; 2009 by <a href="http://www.01-scripts.de" target="_blank">01-Scripts.de</a>
+<b>01-G&auml;stebuch</b> &copy; 2009-<?PHP echo date("Y"); ?> by <a href="http://www.01-scripts.de" target="_blank">01-Scripts.de</a>
 </p>
 
 <br />
