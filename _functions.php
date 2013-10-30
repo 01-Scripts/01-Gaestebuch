@@ -17,45 +17,6 @@
 		}
 */
 
-// Globale Funktionen - nötig!
-
-// Funktion wird zentral aufgerufen, wenn ein Benutzer gelöscht wird.
-/*$userid			UserID des gelöschten Benutzers
-  $username			Username des gelöschten Benutzers
-  $mail				E-Mail-Adresse des gelöschten Benutzers
-
-RETURN: TRUE/FALSE
-*/
-if(!function_exists("_01gbook_DeleteUser")){
-function _01gbook_DeleteUser($userid,$username,$mail){
-return TRUE;
-}
-}
-
-
-
-
-
-
-
-// Userstatistiken holen
-/* @param int $userid			UserID, zu der die Infos geholt werden sollen
-
-RETURN: Array(
-			statcat[x] 		=> "Statistikbezeichnung für Frontend-Ausgabe"
-			statvalue[x] 	=> "Auszugebender Wert"
-			)
-  */
-if(!function_exists("_01gbook_getUserstats")){
-function _01gbook_getUserstats($userid){
-return false;
-}
-}
-
-
-
-
-
 // Drop-Down zum Sortieren der Gästebuchfelder
 /*$catids			Kommaseparierter CatID-String
 
