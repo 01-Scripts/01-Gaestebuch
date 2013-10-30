@@ -1,10 +1,12 @@
 /* 
-01-Gästebuch - Copyright 2009 by Michael Lorer - 01-Scripts.de
+01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
 Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
 Modul:		01gbook
-Dateiinfo: 	Frontend-JavaScript-Funktion
+Dateiinfo:  Frontend-BB-Code-JavaScript-Funktion
+Unkomprimierte Version der Datei: https://github.com/01-Scripts/01-Gaestebuch/blob/V1.0.1/01gbook/templates/javas.js
+#fv.101#
 */
 
 
@@ -62,11 +64,3 @@ function bbcinsert(aTag, eTag) {
     input.value = input.value.substr(0, pos) + aTag + insText + eTag + input.value.substr(pos);
   }
 }
-
-
-
-
-
-
-
-/* 01-Gästebuch Copyright 2009 by Michael Lorer - 01-Scripts.de */
