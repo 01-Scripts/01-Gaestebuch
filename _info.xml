@@ -9,7 +9,7 @@
 	<need01acpv>1.0.0.2</need01acpv>
 	<datum>21.02.2008</datum>
 	<includeinfo><![CDATA[
-Verwenden Sie folgenden PHP-Code um das 01-Gästebuch in Ihre Seite zu integrieren:<br />
+<p>Verwenden Sie folgenden PHP-Code um das 01-Gästebuch in Ihre Seite zu integrieren:<br />
 <code>
 &lt;?PHP<br />
 $subfolder		= "01scripts/"; // Unterverzeichnis<br />
@@ -23,7 +23,7 @@ include($subfolder."01module/".$modul."/01gbook.php");<br />
 Optionale Parameter sind:<br />
 $flag_utf8      = FALSE; // Setzen Sie $flag_utf8 = TRUE; falls Sie Ihre Seite UTF-8-kodiert ausgeben<br />
 $flag_nocss     = FALSE; // Setzen Sie $flag_nocss = TRUE; wenn kein CSS eingebunden werden soll<br />
-</code>
+</code></p>
 	]]></includeinfo>
 
 </modul>
