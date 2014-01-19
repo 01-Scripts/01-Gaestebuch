@@ -9,6 +9,8 @@
 	#fv.101#
 */
 
+// Security: Only allow calls from _ajaxloader.php!
+if(basename($_SERVER['SCRIPT_FILENAME']) != "_ajaxloader.php") exit;
 
 // Ajax-Requests bearbeiten
 // Kommentare löschen
