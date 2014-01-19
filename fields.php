@@ -47,6 +47,14 @@ if(isset($_POST['do']) && $_POST['do'] == "addfield" &&
 		$maxlength = $mysqli->escape_string($_POST['length']);
 	else
 		$maxlength = "";
+
+	// Pflichtfeld?
+	if(!isset($_POST['pflicht']) || isset($_POST['pflicht']) && empty($_POST['pflicht']))
+		$_POST['pflicht'] = 0;
+
+	// Inhalt öffentlich anzeigen?
+	if(!isset($_POST['public']) || isset($_POST['public']) && empty($_POST['public']))
+		$_POST['public'] = 0;
 	
     // Eintragung in Datenbank vornehmen:
 	$sql_insert = "INSERT INTO ".$mysql_tables['gb_fields']." (name,type,wert,parse,size,length,pflicht,public,hide) VALUES (
@@ -56,8 +64,8 @@ if(isset($_POST['do']) && $_POST['do'] == "addfield" &&
 					'".$parse."',
 					'".$size."',
 					'".$maxlength."',
-					'".$mysqli->escape_string($_POST['pflicht'])."',
-					'".$mysqli->escape_string($_POST['public'])."',
+					'".$mysqli->escape_string(intval($_POST['pflicht']))."',
+					'".$mysqli->escape_string(intval($_POST['public']))."',
 					'0'
 					)";
 	$mysqli->query($sql_insert) OR die($mysqli->error);
@@ -110,15 +118,23 @@ if(isset($_POST['do']) && $_POST['do'] == "editfield" &&
 		$size = "7|50";
 	else
 		$size = "";
+
+	// Pflichtfeld?
+	if(!isset($_POST['pflicht']) || isset($_POST['pflicht']) && empty($_POST['pflicht']))
+		$_POST['pflicht'] = 0;
+
+	// Inhalt öffentlich anzeigen?
+	if(!isset($_POST['public']) || isset($_POST['public']) && empty($_POST['public']))
+		$_POST['public'] = 0;
 	
 	$mysqli->query("UPDATE ".$mysql_tables['gb_fields']." SET 
 				name 		= '".$mysqli->escape_string($_POST['feldname'])."',
 				wert 		= '".$mysql_wert."',
 				parse		= '".$parse."',
 				size 		= '".$size."',
-				pflicht 	= '".$mysqli->escape_string($_POST['pflicht'])."',
-				public	 	= '".$mysqli->escape_string($_POST['public'])."'
-				WHERE id = '".$mysqli->escape_string($_POST['id'])."' AND hide = '0' LIMIT 1");
+				pflicht 	= '".$mysqli->escape_string(intval($_POST['pflicht']))."',
+				public	 	= '".$mysqli->escape_string(intval($_POST['public']))."'
+				WHERE id = '".$mysqli->escape_string(intval($_POST['id']))."' AND hide = '0' LIMIT 1");
 	
 	echo "<p class=\"meldung_erfolg\">Feld wurder aktualisiert</p>";
 	}

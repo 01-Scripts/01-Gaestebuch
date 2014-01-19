@@ -1,4 +1,4 @@
--- 01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
+-- 01-Gästebuch - Copyright 2009-2014 by Michael Lorer - 01-Scripts.de
 -- Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 -- Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 
@@ -49,7 +49,7 @@ INSERT INTO 01prefix_menue (name,link,modul,sicherheitslevel,rightname,rightvalu
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `01prefix_gbfields`
+-- Tabellenstruktur für Tabelle `01modulprefix_gbfields`
 -- 
 
 CREATE TABLE IF NOT EXISTS `01modulprefix_gbfields` (
@@ -65,10 +65,10 @@ CREATE TABLE IF NOT EXISTS `01modulprefix_gbfields` (
 `public` TINYINT( 1 ) NOT NULL DEFAULT '1' COMMENT 'Feld oeffentlich ausgeben?',
 `hide` TINYINT( 1 ) NOT NULL DEFAULT '0',
 `nodelete` TINYINT( 1 ) NOT NULL DEFAULT '0'
-) ENGINE = MYISAM AUTO_INCREMENT=1 ;
+) ENGINE=MYISAM AUTO_INCREMENT=1 ;
 
 -- 
--- Daten für Tabelle `01prefix_gbfields`
+-- Daten für Tabelle `01modulprefix_gbfields`
 -- Vorgegebene Felder (inkl. Eintragsfeld)
 -- 
 
@@ -81,7 +81,7 @@ INSERT INTO `01modulprefix_gbfields` (`id`, `sortorder`, `name`, `type`, `wert`,
 -- --------------------------------------------------------
 
 -- 
--- Tabellenstruktur für Tabelle `01prefix_gbentries`
+-- Tabellenstruktur für Tabelle `01modulprefix_gbentries`
 -- 
 
 CREATE TABLE IF NOT EXISTS `01modulprefix_gbentries` (
@@ -99,12 +99,12 @@ CREATE TABLE IF NOT EXISTS `01modulprefix_gbentries` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 -- 
--- Daten für Tabelle `01prefix_gbentries`
+-- Daten für Tabelle `01modulprefix_gbentries`
 -- 1. Dummypost
 -- 
 
 INSERT INTO `01modulprefix_gbentries` (`timestamp`, `uid`, `ip`, `frei`, `bbc_smile_deaktiv`, `field_1`, `field_2`, `field_3`, `field_4`) VALUES
-(1230764401, '6eb143ec98785c64fa0806337fc7b8bb', '0.0.0.0', 1, 0, '01-Scripts.de', '', 'http://www.01-scripts.de', '[B]Vielen Dank, dass Sie sich f&uuml;r das 01-G&auml;stebuch entschieden haben![/B]\r\nDiesen ersten Eintrag k&ouml;nnen Sie l&ouml;schen, nachdem Sie sich in den Administrationsbereich eingeloggt haben.\r\n\r\nBei Fragen oder Problemen rund um das [B]01-G&auml;stebuch[/B] oder das [B]01acp[/B] stehe ich Ihnen gerne im [URL=http://board.01-scripts.de]01-Supportforum[/URL] oder per E-Mail zu Verf&uuml;gung.\r\n\r\nBitte beachten Sie die [URL=http://www.01-scripts.de/lizenz.php]g&uuml;ltigen Lizenzbestimmungen[/URL]! Das 01-G&auml;stebuch und das 01acp werden unter der Creative-Commons-Lizenz [I]\\&quot;[URL=http://creativecommons.org/licenses/by-nc-sa/3.0/de/]Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland[/URL]\\&quot;[/I] ver&ouml;ffentlicht.\r\n\r\nInformationen zum Erwerb einer Lizenz zur kommerziellen Nutzung (Gestattet den Einsatz auf kommerziellen Seiten und/oder Firmenseiten) oder eine Non-Copyright-Lizenz (die zum Entfernen des sichtbaren Urheberrechts-Hinweises berechtigt) entnehmen Sie bitte [URL=http://www.01-scripts.de/preise.php]dieser Seite[/URL].\r\n\r\nMfG,\r\nMichael Lorer\r\nWeb: http://www.01-scripts.de\r\nMail: info@01-scripts.de');
+(1388530801, '6eb143ec98785c64fa0806337fc7b8bb', '0.0.0.0', 1, 0, '01-Scripts.de', '', 'http://www.01-scripts.de', '[B]Vielen Dank, dass Sie sich f&uuml;r das 01-G&auml;stebuch entschieden haben![/B]\r\nDiesen ersten Eintrag k&ouml;nnen Sie l&ouml;schen, nachdem Sie sich in den Administrationsbereich eingeloggt haben.\r\n\r\nBei Fragen oder Problemen rund um das [B]01-G&auml;stebuch[/B] oder das [B]01acp[/B] stehe ich Ihnen gerne im [URL=http://board.01-scripts.de]01-Supportforum[/URL] oder per E-Mail zu Verf&uuml;gung.\r\n\r\nBitte beachten Sie die [URL=http://www.01-scripts.de/lizenz.php]g&uuml;ltigen Lizenzbestimmungen[/URL]! Das 01-G&auml;stebuch und das 01acp werden unter der Creative-Commons-Lizenz [I]\\&quot;[URL=http://creativecommons.org/licenses/by-nc-sa/3.0/de/]Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland[/URL]\\&quot;[/I] ver&ouml;ffentlicht.\r\n\r\nInformationen zum Erwerb einer Lizenz zur kommerziellen Nutzung (Gestattet den Einsatz auf kommerziellen Seiten und/oder Firmenseiten) oder eine Non-Copyright-Lizenz (die zum Entfernen des sichtbaren Urheberrechts-Hinweises berechtigt) entnehmen Sie bitte [URL=http://www.01-scripts.de/preise.php]dieser Seite[/URL].\r\n\r\nMfG,\r\nMichael Lorer\r\nWeb: http://www.01-scripts.de\r\nMail: info@01-scripts.de');
 
 -- --------------------------------------------------------
 
