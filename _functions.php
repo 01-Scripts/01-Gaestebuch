@@ -1,6 +1,6 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2014 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
@@ -16,6 +16,27 @@
 		_example_TolleFunktion($parameter){ ... }
 		}
 */
+
+// Funktion wird zentral aufgerufen, wenn das Modul gelöscht werden soll
+/*
+RETURN: TRUE
+*/
+if(!function_exists("_01gbook_DeleteModul")){
+function _01gbook_DeleteModul(){
+global $mysqli,$mysql_tables,$modul;
+
+$modul = $mysqli->escape_string($modul);
+
+// MySQL-Tabellen löschen
+$mysqli->query("DROP TABLE `".$mysql_tables['gb_fields']."`");
+$mysqli->query("DROP TABLE `".$mysql_tables['gb_entry']."`");
+
+// Rechte entfernen
+// Nothing to be done
+
+return TRUE;
+}
+}
 
 // Drop-Down zum Sortieren der Gästebuchfelder
 /*$catids			Kommaseparierter CatID-String
