@@ -98,11 +98,11 @@ function _01gbook_getFields($where){
 global $mysql_tables,$mysqli;
 
 $fields = array();
-$list = $mysqli->query("SELECT id,name,type,parse FROM ".$mysql_tables['gb_fields']."".$where." ORDER BY sortorder,name");
+$list = $mysqli->query("SELECT id,name,fieldtype,parse FROM ".$mysql_tables['gb_fields']."".$where." ORDER BY sortorder,name");
 while($row = $list->fetch_assoc()){
 	$fields[$row['id']]['id']		= $row['id'];
 	$fields[$row['id']]['name']		= stripslashes($row['name']);
-	$fields[$row['id']]['type']		= stripslashes($row['type']);
+	$fields[$row['id']]['fieldtype']= stripslashes($row['fieldtype']);
 	$fields[$row['id']]['parse']	= stripslashes($row['parse']);
 	}
 	
@@ -155,7 +155,7 @@ while($row = $list->fetch_assoc()){
 	$return .= "<tr id=\"id".$row['id']."\">
 	<td width=\"25\" align=\"center\"><input type=\"checkbox\" name=\"delid[]\" value=\"".$row['id']."\" /></td>
 	<td".$colspan." onclick=\"modulpopup('".$modul."','show_entry','".$row['id']."','','',580,450);\" style=\"cursor: pointer;\">
-		Am ".date("d.m.Y - H:i",$row['timestamp'])."Uhr von <b>".stripslashes($row['field_'.$namefield_id])."</b> (".$row['ip'].") verfasst:<br />
+		Am ".date("d.m.Y - H:i",$row['utimestamp'])."Uhr von <b>".stripslashes($row['field_'.$namefield_id])."</b> (".$row['ip'].") verfasst:<br />
 		".substr(strip_tags(bb_code_comment(stripslashes($row['field_'.$eintragsfield_id]),1,$x,$x)),0,250)." [...]
 	</td>\n";
 	

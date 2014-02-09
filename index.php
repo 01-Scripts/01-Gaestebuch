@@ -1,6 +1,6 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2014 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
@@ -26,10 +26,10 @@
 	<h4>5 neueste Eintr&auml;ge</h4>
 
 	<?PHP
-	$query = "SELECT id,timestamp,field_".$namefield_id.",field_".$eintragsfield_id." FROM ".$mysql_tables['gb_entry']." WHERE frei = '1' ORDER BY timestamp DESC LIMIT 5";
+	$query = "SELECT id,utimestamp,field_".$namefield_id.",field_".$eintragsfield_id." FROM ".$mysql_tables['gb_entry']." WHERE frei = '1' ORDER BY utimestamp DESC LIMIT 5";
 	$list = $mysqli->query($query);
 	while($row = $list->fetch_assoc()){
-		echo "<p><i>".date("d.m.y, G:i",$row['timestamp'])."</i> &bull; <b>".stripslashes($row['field_'.$namefield_id])."</b><br />
+		echo "<p><i>".date("d.m.y, G:i",$row['utimestamp'])."</i> &bull; <b>".stripslashes($row['field_'.$namefield_id])."</b><br />
 		".substr(stripslashes(strip_tags($row['field_'.$eintragsfield_id])),0,100)."...
 		</p>";
 		}

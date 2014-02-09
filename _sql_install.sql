@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `01modulprefix_gbfields` (
 `id` INT( 10 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `sortorder` INT( 5 ) NOT NULL DEFAULT '1',
 `name` VARCHAR( 100 ) NOT NULL ,
-`type` VARCHAR( 25 ) NOT NULL ,
+`fieldtype` VARCHAR( 25 ) NOT NULL ,
 `wert` TEXT NULL ,
 `parse` VARCHAR( 10 ) NULL ,
 `size` VARCHAR( 25 ) NULL ,
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `01modulprefix_gbfields` (
 -- Vorgegebene Felder (inkl. Eintragsfeld)
 -- 
 
-INSERT INTO `01modulprefix_gbfields` (`id`, `sortorder`, `name`, `type`, `wert`, `parse`, `size`, `length`, `pflicht`, `public`, `hide`, `nodelete`) VALUES
+INSERT INTO `01modulprefix_gbfields` (`id`, `sortorder`, `name`, `fieldtype`, `wert`, `parse`, `size`, `length`, `pflicht`, `public`, `hide`, `nodelete`) VALUES
 (1, 1, 'Name:', 'text', '', '', '30', '50', 1, 1, 0, 1),
 (2, 2, 'E-Mail:', 'text', '', 'email', '30', '50', 0, 0, 0, 0),
 (3, 3, 'Homepage:', 'text', '', 'url', '30', '50', 0, 1, 0, 0),
@@ -86,7 +86,7 @@ INSERT INTO `01modulprefix_gbfields` (`id`, `sortorder`, `name`, `type`, `wert`,
 
 CREATE TABLE IF NOT EXISTS `01modulprefix_gbentries` (
   `id` int(10) NOT NULL auto_increment,
-  `timestamp` int(10) NOT NULL,
+  `utimestamp` int(10) NOT NULL,
   `uid` varchar(32) NOT NULL,
   `ip` varchar(15) NOT NULL,
   `frei` TINYINT(1) NOT NULL DEFAULT '0',
@@ -103,8 +103,8 @@ CREATE TABLE IF NOT EXISTS `01modulprefix_gbentries` (
 -- 1. Dummypost
 -- 
 
-INSERT INTO `01modulprefix_gbentries` (`timestamp`, `uid`, `ip`, `frei`, `bbc_smile_deaktiv`, `field_1`, `field_2`, `field_3`, `field_4`) VALUES
-(1388530801, '6eb143ec98785c64fa0806337fc7b8bb', '0.0.0.0', 1, 0, '01-Scripts.de', '', 'http://www.01-scripts.de', '[B]Vielen Dank, dass Sie sich f&uuml;r das 01-G&auml;stebuch entschieden haben![/B]\r\nDiesen ersten Eintrag k&ouml;nnen Sie l&ouml;schen, nachdem Sie sich in den Administrationsbereich eingeloggt haben.\r\n\r\nBei Fragen oder Problemen rund um das [B]01-G&auml;stebuch[/B] oder das [B]01acp[/B] stehe ich Ihnen gerne im [URL=http://board.01-scripts.de]01-Supportforum[/URL] oder per E-Mail zu Verf&uuml;gung.\r\n\r\nBitte beachten Sie die [URL=http://www.01-scripts.de/lizenz.php]g&uuml;ltigen Lizenzbestimmungen[/URL]! Das 01-G&auml;stebuch und das 01acp werden unter der Creative-Commons-Lizenz [I]\\&quot;[URL=http://creativecommons.org/licenses/by-nc-sa/3.0/de/]Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland[/URL]\\&quot;[/I] ver&ouml;ffentlicht.\r\n\r\nInformationen zum Erwerb einer Lizenz zur kommerziellen Nutzung (Gestattet den Einsatz auf kommerziellen Seiten und/oder Firmenseiten) oder eine Non-Copyright-Lizenz (die zum Entfernen des sichtbaren Urheberrechts-Hinweises berechtigt) entnehmen Sie bitte [URL=http://www.01-scripts.de/preise.php]dieser Seite[/URL].\r\n\r\nMfG,\r\nMichael Lorer\r\nWeb: http://www.01-scripts.de\r\nMail: info@01-scripts.de');
+INSERT INTO `01modulprefix_gbentries` (`utimestamp`, `uid`, `ip`, `frei`, `bbc_smile_deaktiv`, `field_1`, `field_2`, `field_3`, `field_4`) VALUES
+(1388530801, '06883695fbe9c3a5281bf08a06e26b41', '0.0.0.0', 1, 0, '01-Scripts.de', '', 'http://www.01-scripts.de', '[B]Vielen Dank, dass Sie sich f&uuml;r das 01-G&auml;stebuch entschieden haben![/B]\r\nDiesen ersten Eintrag k&ouml;nnen Sie l&ouml;schen, nachdem Sie sich in den Administrationsbereich eingeloggt haben.\r\n\r\nBei Fragen oder Problemen rund um das [B]01-G&auml;stebuch[/B] oder das [B]01acp[/B] stehe ich Ihnen gerne im [URL=http://board.01-scripts.de]01-Supportforum[/URL] oder per E-Mail zu Verf&uuml;gung.\r\n\r\nBitte beachten Sie die [URL=http://www.01-scripts.de/lizenz.php]g&uuml;ltigen Lizenzbestimmungen[/URL]! Das 01-G&auml;stebuch und das 01acp werden unter der Creative-Commons-Lizenz [I]\\&quot;[URL=http://creativecommons.org/licenses/by-nc-sa/3.0/de/]Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland[/URL]\\&quot;[/I] ver&ouml;ffentlicht.\r\n\r\nInformationen zum Erwerb einer Lizenz zur kommerziellen Nutzung (Gestattet den Einsatz auf kommerziellen Seiten und/oder Firmenseiten) oder eine Non-Copyright-Lizenz (die zum Entfernen des sichtbaren Urheberrechts-Hinweises berechtigt) entnehmen Sie bitte [URL=http://www.01-scripts.de/preise.php]dieser Seite[/URL].\r\n\r\nMfG,\r\nMichael Lorer\r\nWeb: http://www.01-scripts.de\r\nMail: info@01-scripts.de');
 
 -- --------------------------------------------------------
 

@@ -25,7 +25,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "show_entry" && $userdat
 	while($row = $list->fetch_assoc()){
 		$feldinhalte = "";
 		echo "<p>Geschrieben von <b>".stripslashes($row['field_'.$namefield_id])."</b> (".$row['ip'].") 
-				am <b>".date("d.m.Y",$row['timestamp'])."</b>, <b>".date("H:i",$row['timestamp'])."</b> Uhr</p>";
+				am <b>".date("d.m.Y",$row['utimestamp'])."</b>, <b>".date("H:i",$row['utimestamp'])."</b> Uhr</p>";
 		
 		echo "<p style=\"float:right;\">
 		<a href=\"".$filename."?modul=".$modul."&amp;action=edit_entry&amp;var1=".$_REQUEST['var1']."\"><img src=\"images/icons/icon_edit.gif\" alt=\"Stift+Papier\" title=\"Eintrag bearbeiten\" /></a>
@@ -42,7 +42,7 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "show_entry" && $userdat
 				if($field['id'] != $eintragsfield_id)
 					$feldinhalte .= "<b>".$field['name']."</b> ";
 				
-				switch($field['type']){
+				switch($field['fieldtype']){
 				  case "text":
 				  case "select":
 				    if($field['parse'] == "email")
@@ -158,14 +158,14 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "edit_entry" && $userdat
 			if($rowf['pflicht'] == 1) $pfl = "*";
 			else $pfl = "";
 
-			if($rowf['type'] == "text" || $rowf['type'] == "select")
+			if($rowf['fieldtype'] == "text" || $rowf['fieldtype'] == "select")
 				$felder .= "    <tr class=\"".$class."\">
 				<td><b>".stripslashes($rowf['name']).$pfl."</b></td>";
 			else
 				$felder .= "    <tr class=\"".$class."\">
 				<td colspan=\"2\"><b>".stripslashes($rowf['name']).$pfl."</b><br />\n";
 			
-			switch($rowf['type']){
+			switch($rowf['fieldtype']){
 			  case "text":
 				// Maximale Länge
 				if(isset($rowf['length']) && !empty($rowf['length']) && is_numeric($rowf['length']))
@@ -274,11 +274,11 @@ if(isset($_REQUEST['action']) && $_REQUEST['action'] == "save_entry" && $userdat
 		if(!isset($_REQUEST['deaktiv_bbc']) || isset($_REQUEST['deaktiv_bbc']) && empty($_REQUEST['deaktiv_bbc'])) $_REQUEST['deaktiv_bbc'] = 0;
 		// Build Update-Query
 		$query_werte = "";
-		$list = $mysqli->query("SELECT id,name,type,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
+		$list = $mysqli->query("SELECT id,name,fieldtype,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
 		while($row = $list->fetch_assoc()){
 			if(isset($_REQUEST['feld_'.$row['id']]) && !empty($_REQUEST['feld_'.$row['id']])){
 				$query_werte .= ",\nfield_".$row['id']." = ";
-				if($row['type'] == "text" && !empty($row['length']) && $row['length'] > 0)
+				if($row['fieldtype'] == "text" && !empty($row['length']) && $row['length'] > 0)
 					$query_werte .= "'".$mysqli->escape_string(htmlentities(substr($_REQUEST['feld_'.$row['id']],0,$row['length']), $htmlent_flags, $htmlent_encoding_pub))."'";
 				else
 					$query_werte .= "'".$mysqli->escape_string(htmlentities($_REQUEST['feld_'.$row['id']], $htmlent_flags, $htmlent_encoding_pub))."'";

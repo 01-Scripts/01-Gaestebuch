@@ -122,12 +122,12 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 			$query_fields	= "";
 			$query_werte	= "";
 			$email_werte	= "";
-			$list = $mysqli->query("SELECT id,name,type,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
+			$list = $mysqli->query("SELECT id,name,fieldtype,length FROM ".$mysql_tables['gb_fields']." ORDER BY id");
 			while($row = $list->fetch_assoc()){
 				$query_fields .= ", field_".$row['id'];
 				
 				if(isset($_POST['feld_'.$row['id']]) && !empty($_POST['feld_'.$row['id']])){
-					if($row['type'] == "text" && !empty($row['length']) && $row['length'] > 0)
+					if($row['fieldtype'] == "text" && !empty($row['length']) && $row['length'] > 0)
 						$value = substr($_POST['feld_'.$row['id']],0,$row['length']);
 					else
 						$value = $_POST['feld_'.$row['id']];
@@ -151,7 +151,7 @@ if(isset($_POST['send_entry']) && $_POST['send_entry'] == 1 &&
 			else $deaktiv = 0;
 
 			// Eintragung in Datenbank vornehmen:
-			$sql_insert = "INSERT INTO ".$mysql_tables['gb_entry']." (timestamp,uid,ip,frei,bbc_smile_deaktiv".$query_fields.") VALUES (
+			$sql_insert = "INSERT INTO ".$mysql_tables['gb_entry']." (utimestamp,uid,ip,frei,bbc_smile_deaktiv".$query_fields.") VALUES (
 							'".time()."',
 							'".$mysqli->escape_string($_POST['uid'])."',
 							'".$mysqli->escape_string($_SERVER['REMOTE_ADDR'])."',
@@ -241,7 +241,7 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 		if($row['pflicht'] == 1) $pfl = "*";
 		else $pfl = "";
 
-		if($row['type'] == "text" || $row['type'] == "select")
+		if($row['fieldtype'] == "text" || $row['fieldtype'] == "select")
 			$felder .= "    <tr class=\"fieldrow\">
 			<td class=\"fieldname\">".stripslashes($row['name']).$pfl."</td>";
 		else
@@ -249,7 +249,7 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 			<td colspan=\"2\" class=\"colspanfield\"><span class=\"fieldname\">".stripslashes($row['name']).$pfl."</span><br />\n";
 		
 		
-		switch($row['type']){
+		switch($row['fieldtype']){
 		  case "text":
 			// Size 
 			if(isset($row['size']) && !empty($row['size']) && is_numeric($row['size']))
@@ -319,7 +319,7 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 $fields = _01gbook_getFields(" WHERE public = '1'");
 
 // Einträge aus DB holen
-$query = "SELECT * FROM ".$mysql_tables['gb_entry']." WHERE frei = '1' ORDER BY timestamp DESC";
+$query = "SELECT * FROM ".$mysql_tables['gb_entry']." WHERE frei = '1' ORDER BY utimestamp DESC";
 echo "<!-- 2559ad821dde361560dbf967c3406f51 -->";
 makepages($query,$sites,$names['gpage'],$settings['gbook_perpage']);
 
@@ -327,8 +327,8 @@ makepages($query,$sites,$names['gpage'],$settings['gbook_perpage']);
 $list = $mysqli->query($query);
 while($row = $list->fetch_assoc()){
 	$feldinhalte= "";
-	$datum		= date("d.m.y",$row['timestamp']);
-	$uhrzeit	= date("G:i",$row['timestamp']);
+	$datum		= date("d.m.y",$row['utimestamp']);
+	$uhrzeit	= date("G:i",$row['utimestamp']);
 	echo "<!-- 2559ad821dde361560dbf967c3406f51 -->";
 	$name = stripslashes($row['field_'.$namefield_id]);
 	
@@ -341,7 +341,7 @@ while($row = $list->fetch_assoc()){
 			if($field['id'] != $eintragsfield_id)
 				$feldinhalte .= "<span class=\"gbfrontend_fieldname\">".$field['name']."</span> ";
 			
-			switch($field['type']){
+			switch($field['fieldtype']){
 			  case "text":
 			  case "select":
 			    if($field['parse'] == "email")

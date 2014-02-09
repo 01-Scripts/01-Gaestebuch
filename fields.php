@@ -57,7 +57,7 @@ if(isset($_POST['do']) && $_POST['do'] == "addfield" &&
 		$_POST['public'] = 0;
 	
     // Eintragung in Datenbank vornehmen:
-	$sql_insert = "INSERT INTO ".$mysql_tables['gb_fields']." (name,type,wert,parse,size,length,pflicht,public,hide) VALUES (
+	$sql_insert = "INSERT INTO ".$mysql_tables['gb_fields']." (name,fieldtype,wert,parse,size,length,pflicht,public,hide) VALUES (
 					'".$mysqli->escape_string($_POST['feldname'])."',
 					'".$mysqli->escape_string($_POST['type'])."',
 					'".$mysql_wert."',
@@ -173,7 +173,7 @@ elseif(isset($_GET['do']) && $_GET['do'] == "editfieldform" &&
 	
 	$list = $mysqli->query("SELECT * FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' AND id = '".$mysqli->escape_string($_GET['id'])."'");
 	while($row = $list->fetch_assoc()){
-		if($row['type'] == "textarea"){
+		if($row['fieldtype'] == "textarea"){
 			$array = explode("|",$row['size']);
 			$zeilen = $array[0];
 			$spalten = $array[1];
@@ -185,11 +185,11 @@ elseif(isset($_GET['do']) && $_GET['do'] == "editfieldform" &&
 			$spalten = "";
 		}
 			
-		if($row['type'] == "text")
+		if($row['fieldtype'] == "text")
 			$maxlength = $row['length'];
 		else $maxlength = "";
 
-		$_POST['fieldtype'] = stripslashes($row['type']);
+		$_POST['fieldtype'] = stripslashes($row['fieldtype']);
 		$form_data = array( "do"			=> "editfield",
 							"title"			=> "Feld bearbeiten",
 							"sendbutton"	=> "Feld bearbeiten",
@@ -203,7 +203,7 @@ elseif(isset($_GET['do']) && $_GET['do'] == "editfieldform" &&
 							"parse"			=> stripslashes($row['parse']),
 							"pflicht"		=> $row['pflicht'],
 							"public"		=> $row['public'],
-							"type"			=> stripslashes($row['type']));
+							"fieldtype"		=> stripslashes($row['fieldtype']));
 		include_once("fields_form.php");
 		}
 	}
@@ -275,11 +275,11 @@ if(isset($_POST['sort']) && !empty($_POST['sort'])){
 		}
 	}
 
-$list = $mysqli->query("SELECT id,sortorder,name,type,pflicht,public,nodelete FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' ORDER BY sortorder,name");
+$list = $mysqli->query("SELECT id,sortorder,name,fieldtype,pflicht,public,nodelete FROM ".$mysql_tables['gb_fields']." WHERE hide = '0' ORDER BY sortorder,name");
 while($row = $list->fetch_assoc()){
 	
 	// Feldtyp
-	switch($row['type']){
+	switch($row['fieldtype']){
 	  case "text":
 	    $fieldtype = "Textfeld";
 	  break;

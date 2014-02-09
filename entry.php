@@ -1,6 +1,6 @@
 <?PHP
 /* 
-	01-Gästebuch - Copyright 2009-2013 by Michael Lorer - 01-Scripts.de
+	01-Gästebuch - Copyright 2009-2014 by Michael Lorer - 01-Scripts.de
 	Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
 	Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
 	
@@ -37,7 +37,7 @@ if(isset($_POST['delid']) && !empty($_POST['delid']) &&
 	}
 
 $sites = 0;
-$query = "SELECT id,timestamp,ip,frei,field_".$namefield_id.",field_".$eintragsfield_id." FROM ".$mysql_tables['gb_entry']." WHERE frei = '0' ORDER BY timestamp DESC";
+$query = "SELECT id,utimestamp,ip,frei,field_".$namefield_id.",field_".$eintragsfield_id." FROM ".$mysql_tables['gb_entry']." WHERE frei = '0' ORDER BY utimestamp DESC";
 
 $glist = $mysqli->query($query);
 if($glist->num_rows > 0){
@@ -54,7 +54,7 @@ if($glist->num_rows > 0){
 <h2><img src="images/icons/icon_edit.gif" alt="Stift+Papier" title="Eintrag bearbeiten" /> Eintr&auml;ge bearbeiten</h2>
 <?PHP
 $sites = 0;
-$query = "SELECT id,timestamp,ip,frei,field_".$namefield_id.",field_".$eintragsfield_id." FROM ".$mysql_tables['gb_entry']." ORDER BY timestamp DESC";
+$query = "SELECT id,utimestamp,ip,frei,field_".$namefield_id.",field_".$eintragsfield_id." FROM ".$mysql_tables['gb_entry']." ORDER BY utimestamp DESC";
 $query = makepages($query,$sites,"site",ACP_PER_PAGE);		
 $list = $mysqli->query($query);
 
