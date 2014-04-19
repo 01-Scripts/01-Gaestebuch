@@ -5,9 +5,9 @@
 	<titel>01-Gaestebuch</titel>
 	<beschreibung>Gaestebuch mit beliebigen Eintragsfeldern und kompletter Online-Verwaltung</beschreibung>
 	<icon>images/gbook.gif</icon>
-	<version>1.0.0.0</version>
-	<need01acpv>1.0.0.2</need01acpv>
-	<datum>21.02.2008</datum>
+	<version>1.0.1</version>
+	<need01acpv>1.3.0</need01acpv>
+	<datum>21.04.2014</datum>
 	<includeinfo><![CDATA[
 <p>Verwenden Sie folgenden PHP-Code um das 01-Gästebuch in Ihre Seite zu integrieren:<br />
 <code>
@@ -25,5 +25,13 @@ $flag_utf8      = FALSE; // Setzen Sie $flag_utf8 = TRUE; falls Sie Ihre Seite U
 $flag_nocss     = FALSE; // Setzen Sie $flag_nocss = TRUE; wenn kein CSS eingebunden werden soll<br />
 </code></p>
 	]]></includeinfo>
+
+	<updates>
+		<v1000_v101>
+			<startv>1.0.0.0</startv>
+			<zielv>1.0.1</zielv>
+			<action>1000_zu_101</action>
+		</v1000_v101>
+	</updates>
 
 </modul>
