@@ -2,7 +2,7 @@
 // 1.0.0.0 --> 1.0.1
 if(isset($_REQUEST['update']) && $_REQUEST['update'] == "1000_zu_101"){
 	// Spaltenname 'timestamp' umbenennen in 'utimestamp' #693
-	mysql_query("ALTER TABLE ".$mysql_tables['gb_entry']." CHANGE `timestamp` `utimestamp` INT( 10 ) NOT NULL");
+	mysql_query("ALTER TABLE ".$mysql_tables['gb_entry']." CHANGE `timestamp` `utimestamp` INT( 10 ) NOT NULL DEFAULT '0'");
 	// Spaltenname 'type' umbenennen in 'fieldtype' #693
 	mysql_query("ALTER TABLE ".$mysql_tables['gb_fields']." CHANGE `type` `fieldtype` VARCHAR( 25 ) NOT NULL");
 

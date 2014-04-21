@@ -86,7 +86,7 @@ INSERT INTO `01modulprefix_gbfields` (`id`, `sortorder`, `name`, `fieldtype`, `w
 
 CREATE TABLE IF NOT EXISTS `01modulprefix_gbentries` (
   `id` int(10) NOT NULL auto_increment,
-  `utimestamp` int(10) NOT NULL,
+  `utimestamp` int(10) NOT NULL DEFAULT '0',
   `uid` varchar(32) NOT NULL,
   `ip` varchar(15) NOT NULL,
   `frei` TINYINT(1) NOT NULL DEFAULT '0',
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS `01modulprefix_gbentries` (
 -- 
 
 INSERT INTO `01modulprefix_gbentries` (`utimestamp`, `uid`, `ip`, `frei`, `bbc_smile_deaktiv`, `field_1`, `field_2`, `field_3`, `field_4`) VALUES
-(1388530801, '06883695fbe9c3a5281bf08a06e26b41', '0.0.0.0', 1, 0, '01-Scripts.de', '', 'http://www.01-scripts.de', '[B]Vielen Dank, dass Sie sich f&uuml;r das 01-G&auml;stebuch entschieden haben![/B]\r\nDiesen ersten Eintrag k&ouml;nnen Sie l&ouml;schen, nachdem Sie sich in den Administrationsbereich eingeloggt haben.\r\n\r\nBei Fragen oder Problemen rund um das [B]01-G&auml;stebuch[/B] oder das [B]01acp[/B] stehe ich Ihnen gerne im [URL=http://board.01-scripts.de]01-Supportforum[/URL] oder per E-Mail zu Verf&uuml;gung.\r\n\r\nBitte beachten Sie die [URL=http://www.01-scripts.de/lizenz.php]g&uuml;ltigen Lizenzbestimmungen[/URL]! Das 01-G&auml;stebuch und das 01acp werden unter der Creative-Commons-Lizenz [I]\\&quot;[URL=http://creativecommons.org/licenses/by-nc-sa/3.0/de/]Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland[/URL]\\&quot;[/I] ver&ouml;ffentlicht.\r\n\r\nInformationen zum Erwerb einer Lizenz zur kommerziellen Nutzung (Gestattet den Einsatz auf kommerziellen Seiten und/oder Firmenseiten) oder eine Non-Copyright-Lizenz (die zum Entfernen des sichtbaren Urheberrechts-Hinweises berechtigt) entnehmen Sie bitte [URL=http://www.01-scripts.de/preise.php]dieser Seite[/URL].\r\n\r\nMfG,\r\nMichael Lorer\r\nWeb: http://www.01-scripts.de\r\nMail: info@01-scripts.de');
+(1398074400, '06883695fbe9c3a5281bf08a06e26b41', '0.0.0.0', 1, 0, '01-Scripts.de', '', 'http://www.01-scripts.de', '[B]Vielen Dank, dass Sie sich f&uuml;r das 01-G&auml;stebuch entschieden haben![/B]\r\nDiesen ersten Eintrag k&ouml;nnen Sie l&ouml;schen, nachdem Sie sich in den Administrationsbereich eingeloggt haben.\r\n\r\nBei Fragen oder Problemen rund um das [B]01-G&auml;stebuch[/B] oder das [B]01acp[/B] stehe ich Ihnen gerne im [URL=http://board.01-scripts.de]01-Supportforum[/URL] oder per E-Mail zu Verf&uuml;gung.\r\n\r\nBitte beachten Sie die [URL=http://www.01-scripts.de/lizenz.php]g&uuml;ltigen Lizenzbestimmungen[/URL]! Das 01-G&auml;stebuch und das 01acp werden unter der Creative-Commons-Lizenz [I]\\&quot;[URL=http://creativecommons.org/licenses/by-nc-sa/3.0/de/]Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland[/URL]\\&quot;[/I] ver&ouml;ffentlicht.\r\n\r\nInformationen zum Erwerb einer Lizenz zur kommerziellen Nutzung (Gestattet den Einsatz auf kommerziellen Seiten und/oder Firmenseiten) oder eine Non-Copyright-Lizenz (die zum Entfernen des sichtbaren Urheberrechts-Hinweises berechtigt) entnehmen Sie bitte [URL=http://www.01-scripts.de/preise.php]dieser Seite[/URL].\r\n\r\nMfG,\r\nMichael Lorer\r\nWeb: http://www.01-scripts.de\r\nMail: info@01-scripts.de');
 
 -- --------------------------------------------------------
 
