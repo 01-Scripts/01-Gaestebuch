@@ -1,0 +1,27 @@
+h1. 01-Gästebuch
+
+Mit dem "_01-Gästebuch_":http://www.01-scripts.de/01gbook.php ist es möglich schnell und einfach ein eigenes, individuelles Gästebuch einzurichten. Dabei müssen Sie sich nicht von vorgegebenen Eingabefeldern einschränken lassen, sondern können über den Administrationsbereich (01ACP) bequem beliebige Eingabefelder für ihr Gästebuch anlegen.
+"Weitere Informationen...":http://www.01-scripts.de/01gbook.php
+
+h2. Download
+
+Die jeweils aktuellste Version des 01-Gästebuchs kann unter
+"http://www.01-scripts.de/01gbook.php":http://www.01-scripts.de/01gbook.php
+heruntergeladen werden.
+
+h2. Repository
+
+Das vorliegende Github-Repository enthält den aktuellen Entwicklungsstand des Moduls.
+
+h2. Lizenz
+
+Das 01-Gästebuch ist unter "CC BY-NC-SA":http://www.01-scripts.de/lizenz.php -Lizenz veröffentlicht:
+
+*Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland*
+
+* Alle PHP-Scripte von "01-Scripts.de":http://www.01-scripts.de können für den privaten, nicht-kommerziellen Einsatz kostenlos genutzt werden. 
+* Für die kommerzielle Nutzung (darunter fällt auch der Einsatz auf Firmenseiten!) können Sie eine Lizenz zur kommerziellen Nutzung erwerben.
+* Wenn Sie den sichtbaren Urheberrechtshinweis entfernen möchten, erwerben Sie bitte eine Non-Copyright-Lizenz.
+
+Lizenzen können hier erworben werden:
+"http://www.01-scripts.de/shop.php":http://www.01-scripts.de/shop.php
