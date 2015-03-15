@@ -1,0 +1,50 @@
+01ACP - Copyright 2008-2014 by Michael Lorer - 01-Scripts.de
+Lizenz: Creative-Commons: Namensnennung-Keine kommerzielle Nutzung-Weitergabe unter gleichen Bedingungen 3.0 Deutschland
+Weitere Lizenzinformationen unter: http://www.01-scripts.de/lizenz.php
+=========================================================
+
+Neuinstallation:
+================
+Informationen zur Neuinstallation des 01-Gästebuch in beiliegender Installationsanleitung.pdf oder online:
+http://www.01-scripts.de/01gabook.php?install
+
+
+Update:	01-Gästebuch V 1.0.0.0 nach V 1.0.1
+===========================================
+
+!!! ACHTUNG !!!
+Voraussetzung für dieses Update ist die Version 1.3.0 oder größer des 01ACP!
+Sie können diese Version hier herunterladen: http://www.01-scripts.de/01acp.php
+!!! ACHTUNG !!!
+
+- Legen Sie ein Backup ihrer Datenbank an!
+- Legen Sie ein Backup ihrer Daten via FTP-Programm an!
+
+- Markieren Sie alle im Verzeichnis 01gbook/ enthaltenen Dateien und Unterverzeichnisse und
+  laden Sie sie per FTP-Programm in das entsprechende Modul-Verzeichnis (01scripts/01module/.....) auf Ihren Webspace hoch.
+  Überschreiben Sie dabei alle bereits existierende Dateien.
+
+- Loggen Sie sich in den Administrationsbereich ein und wählen Sie auf der Startseite im linken Menü
+  den Punkt "Module verwalten".
+  Starten Sie den Update-Vorgang für das 01-Gästebuch durch einen Klick auf das Zahnrad-Symbol.
+
+
+
+Changelog 01-Gästebuch - 1.0.1
+==============================
+- 0000689: [Global] 	Behebung diverser kleinerer Bugs
+- 0000693: [Global] 	Der Spaltenname 'timestamp' und 'type' ist ein reserviertes MySQL-Schlüsselwort.
+- 0000659: [Frontend] 	CSS-Code überarbeiten
+- 0000604: [Backend] 	Sicherheitsfeature _ajax.php
+ - 0000109: [Backend] 	Keine eigene Popup-Datei/Funktion mehr
+- 0000386: [Backend] 	Deinstallationsfunktion für Module implementieren
+- 0000414: [Backend] 	MySQL 5-Kompatibilität
+- 0000274: [Global] 	Für alle MySQL-Felder Standardwerte vorgeben
+- 0000289: [Backend] 	_functions.php bereinigen
+- 0000614: [Backend] 	Javascript-Datei-Handling
+- 0000667: [Global] 	Replace all deprecated mysql_-functions
+- 0000367: [Frontend] 	XSS-Lücke in 01gbook.php
+- 0000149: [Frontend] 	Problem mit utf8-Codierung
+- 0000198: [Frontend] 	Unterstützung für xxx.php?section=gbuch-Links verbessern
+- 0000148: [Frontend] 	main_bottom.html nicht includiert
+- 0000134: [Frontend] 	Bug bei $flag_utf8 = true; (Kommentartext wird nicht gespeichert)

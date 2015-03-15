@@ -1,0 +1,28 @@
+{
+  "Version": "1.0.1",
+  "PrevVersion": "1.0.0.0",
+  "Files2Minimize": [
+    "modul.css",
+    "templates/javas.js"
+  ],
+  "Files2Delete": [
+    "readme.textile",
+    "_build.json",
+    "update_liesmich.txt"
+  ],
+  "Files4Update": [
+    "templates/",
+    "01gbook.php",
+    "_ajax.php",
+    "_functions.php",
+    "_headinclude.php",
+    "_info.xml",
+    "_popup.php",
+    "_updates.php",
+    "entry.php",
+    "fields.php",
+    "fields_form.php",
+    "index.php",
+    "modul.css"
+  ]
+}
