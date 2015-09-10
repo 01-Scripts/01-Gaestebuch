@@ -6,6 +6,7 @@
     "templates/javas.js"
   ],
   "Files2Delete": [
+    ".gitattributes",
     "readme.textile",
     "_build.json",
     "update_liesmich.txt"
