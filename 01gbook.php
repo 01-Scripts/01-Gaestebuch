@@ -302,7 +302,7 @@ if(isset($_GET['doshow']) && $_GET['doshow'] == "addentry" || $flag_showform){
 		</tr>";
 		}
 
-	$zahl = mt_rand(1, 9999999999999);
+	$zahl = mt_rand();
 	$uid = md5(time().$_SERVER['REMOTE_ADDR'].$zahl);
 	// Formular für neuen Eintrag einfügen
 	include($tempdir."addentry.html");
