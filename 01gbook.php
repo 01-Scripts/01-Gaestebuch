@@ -47,7 +47,7 @@ if(!isset($_GET[$names['gpage']])) $_GET[$names['gpage']] = "";
 // Variablen
 $tempdir	= $moduldir.$modulvz.$tempdir;			// Template-Verzeichnis
 
-$filename		= $_SERVER['PHP_SELF'];
+$filename		= $_SERVER['SCRIPT_NAME'];
 $sites			= 0;
 $flag_showform	= false;
 $message		= "";
