@@ -42,7 +42,7 @@ include_once($moduldir.$modulvz."_headinclude.php");
 include_once($moduldir.$modulvz."_functions.php");
 
 // Variablen ggf. vorbelegen
-if(!isset($_GET[$names['gpage']])) $_GET[$names['gpage']] = "";
+if(!isset($_GET[$names['gpage']]) || isset($_GET[$names['gpage']]) && !is_numeric($_GET[$names['gpage']])) $_GET[$names['gpage']] = "";
 
 // Variablen
 $tempdir	= $moduldir.$modulvz.$tempdir;			// Template-Verzeichnis
